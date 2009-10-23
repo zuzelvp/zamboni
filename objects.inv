@@ -1,0 +1,9 @@
+# Sphinx inventory version 1
+# Project: zamboni
+# Version: 0.1
+jingo.templatetags mod ref/jingo/
+jingo.render function ref/jingo/
+jingo.templatetags.url function ref/jingo/
+jingo.templatetags.f function ref/jingo/
+jingo.templatetags.selected function ref/jingo/
+jingo.templatetags.class_selected function ref/jingo/

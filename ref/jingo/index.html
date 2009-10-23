@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A page about Jingo. &mdash; zamboni v0.1 documentation</title>
+    <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="prev" title="Getting Started with zamboni" href="../../installation/" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../../installation/" title="Getting Started with zamboni"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-page-about-jingo">
+<h1>A page about Jingo.<a class="headerlink" href="#a-page-about-jingo" title="Permalink to this headline">¶</a></h1>
+<p>Jingo is an adapter for using
+<a class="reference external" href="http://jinja.pocoo.org/2/documentation/">Jinja2</a> templates within Django.
+Why are we already replacing the templates?  AMO&#8217;s current PHP templates let you
+go hog-wild with logic in the templates, while Django is extremely restrictive.
+Jinja loosens those restrictions somewhat, providing a more powerful engine with
+the beauty of Django&#8217;s templates.  The tipping point for me was the verbosity of
+doing L10n in Django templates.</p>
+<div class="section" id="localization">
+<h2>Localization<a class="headerlink" href="#localization" title="Permalink to this headline">¶</a></h2>
+<p>Since we all love L10n, let&#8217;s see what it looks like in Jinja templates:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;h2&gt;</span><span class="cp">{{</span> <span class="kp">_</span><span class="o">(</span><span class="s1">&#39;Reviews for {0}&#39;</span><span class="o">)|</span><span class="nf">f</span><span class="o">(</span><span class="nv">addon.name</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&lt;/h2&gt;</span>
+</pre></div>
+</div>
+<p>The simple way is to use the familiar underscore and string within a <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">}}</span></tt>
+moustache block.  <tt class="docutils literal"><span class="pre">f</span></tt> is an interpolation filter documented below.  Sphinx
+could create a link if I knew how to do that.</p>
+<p>The other method uses Jinja&#8217;s <tt class="docutils literal"><span class="pre">trans</span></tt> tag:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">trans</span> <span class="nv">user</span><span class="o">=</span><span class="nv">review.user</span><span class="o">|</span><span class="nf">user_link</span><span class="o">,</span> <span class="nv">date</span><span class="o">=</span><span class="nv">review.created</span><span class="o">|</span><span class="nf">datetime</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  by </span><span class="cp">{{</span> <span class="nv">user</span> <span class="cp">}}</span><span class="x"> on </span><span class="cp">{{</span> <span class="nv">date</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endtrans</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">trans</span></tt> is nice when you have a lot of text or want to inject some variables
+directly.  Both methods are useful, pick the one that makes you happy.</p>
+</div>
+<div class="section" id="rendering">
+<h2>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h2>
+<p>At this point, Jingo only provides two shortcuts for rendering templates.</p>
+<dl class="function">
+<dt id="jingo.render">
+<tt class="descclassname">jingo.</tt><tt class="descname">render</tt><big>(</big><em>request</em>, <em>template</em>, <em>context=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#jingo.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut like Django&#8217;s render_to_response, but better.</p>
+<p>The basic usage is to pass an <tt class="docutils literal"><span class="pre">HttpRequest</span></tt> and a template name.  All the
+processors in <tt class="docutils literal"><span class="pre">settings.CONTEXT_PROCESSORS</span></tt> will be applied to the
+context, just like when you use a <tt class="docutils literal"><span class="pre">RequestContext</span></tt> in Django.  Any extra
+keyword arguments are passed directly to <tt class="docutils literal"><span class="pre">http.HttpResponse</span></tt>.</p>
+</dd></dl>
+
+<div class="section" id="module-jingo.templatetags">
+<h3>Template filters provided by jingo<a class="headerlink" href="#module-jingo.templatetags" title="Permalink to this headline">¶</a></h3>
+<p>These filters are injected into all templates automatically.  Template filters
+are what Jinja uses instead of &#8220;helpers&#8221; in other systems.  They&#8217;re just
+functions that get called from templates using the <tt class="docutils literal"><span class="pre">|</span></tt> (pipe) syntax.</p>
+<dl class="function">
+<dt id="jingo.templatetags.class_selected">
+<tt class="descclassname">jingo.templatetags.</tt><tt class="descname">class_selected</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#jingo.templatetags.class_selected" title="Permalink to this definition">¶</a></dt>
+<dd>Return <tt class="docutils literal"><span class="pre">'class=&quot;selected&quot;'</span></tt> if <tt class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></tt>.</dd></dl>
+
+<dl class="function">
+<dt id="jingo.templatetags.f">
+<tt class="descclassname">jingo.templatetags.</tt><tt class="descname">f</tt><big>(</big><em>string</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#jingo.templatetags.f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses <tt class="docutils literal"><span class="pre">str.format</span></tt> for string interpolation.</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="x">&gt;&gt;&gt; </span><span class="cp">{{</span> <span class="s2">&quot;{0} arguments and {x} arguments&quot;</span><span class="o">|</span><span class="nf">f</span><span class="o">(</span><span class="s1">&#39;positional&#39;</span><span class="o">,</span> <span class="nv">x</span><span class="o">=</span><span class="s1">&#39;keyword&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">&quot;positional arguments and keyword arguments&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="jingo.templatetags.selected">
+<tt class="descclassname">jingo.templatetags.</tt><tt class="descname">selected</tt><big>(</big><em>a</em>, <em>b</em>, <em>text='selected'</em><big>)</big><a class="headerlink" href="#jingo.templatetags.selected" title="Permalink to this definition">¶</a></dt>
+<dd>Return <tt class="docutils literal"><span class="pre">text</span></tt> if <tt class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></tt>.</dd></dl>
+
+<dl class="function">
+<dt id="jingo.templatetags.url">
+<tt class="descclassname">jingo.templatetags.</tt><tt class="descname">url</tt><big>(</big><em>viewname</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#jingo.templatetags.url" title="Permalink to this definition">¶</a></dt>
+<dd>Helper for Django&#8217;s <tt class="docutils literal"><span class="pre">reverse</span></tt> in templates.</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">A page about Jingo.</a><ul>
+<li><a class="reference external" href="#localization">Localization</a></li>
+<li><a class="reference external" href="#rendering">Rendering</a><ul>
+<li><a class="reference external" href="#module-jingo.templatetags">Template filters provided by jingo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../../installation/"
+                                  title="previous chapter">Getting Started with zamboni</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../sources/ref/jingo.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search/" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../installation/" title="Getting Started with zamboni"
+             >previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Jeff Balogh.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>
