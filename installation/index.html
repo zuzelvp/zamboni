@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Getting Started with zamboni &mdash; zamboni v0.1 documentation</title>
+
+    <title>Installing Zamboni &mdash; zamboni v0.1 documentation</title>
     <link rel="stylesheet" href="../static/default.css" type="text/css" />
     <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -20,8 +20,7 @@
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../" />
-    <link rel="next" title="A page about Jingo." href="../ref/jingo/" />
-    <link rel="prev" title="Welcome to zamboni’s documentation!" href="../" /> 
+    <link rel="prev" title="A page about Jingo." href="../ref/jingo/" />
   </head>
   <body>
     <div class="related">
@@ -35,21 +34,18 @@
              accesskey="M">modules</a> |</li>
         <li class="right" >
           <a href="../ref/jingo/" title="A page about Jingo."
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="../" title="Welcome to zamboni’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body">
-            
-  <div class="section" id="getting-started-with-zamboni">
-<h1>Getting Started with zamboni<a class="headerlink" href="#getting-started-with-zamboni" title="Permalink to this headline">¶</a></h1>
+
+  <div class="section" id="installing-zamboni">
+<span id="installation"></span><h1>Installing Zamboni<a class="headerlink" href="#installing-zamboni" title="Permalink to this headline">¶</a></h1>
 <p>We&#8217;re going to use all the hottest Python tools to set up a nice environment.
 Here we go!</p>
 <div class="section" id="requirements">
@@ -83,11 +79,37 @@ management smoother.</p>
 <div class="highlight-python"><pre>wget http://bitbucket.org/dhellmann/virtualenvwrapper/raw/tip/virtualenvwrapper_bashrc -O ~/.virtualenvwrapper
 mkdir ~/.virtualenvs</pre>
 </div>
-<p>Then put this in your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt>:</p>
+<p>Then put these lines in your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt>:</p>
 <div class="highlight-python"><pre>export WORKON_HOME=$HOME/.virtualenvs
 source $HOME/.virtualenvwrapper</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">exec</span> <span class="pre">bash</span></tt> and you&#8217;re set.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You should really be using zsh, but you know to <tt class="docutils literal"><span class="pre">s/bash/zsh/g</span></tt> if
+you&#8217;re sailing that ship.</p>
+</div>
+<div class="section" id="virtualenvwrapper-hooks">
+<h3>virtualenvwrapper Hooks<a class="headerlink" href="#virtualenvwrapper-hooks" title="Permalink to this headline">¶</a></h3>
+<p>virtualenvwrapper lets you run hooks when creating, activating, and deleting
+virtual environments.  These hooks can change settings, the shell environment,
+or anything else you want to do from a shell script.  For complete hook
+documentation, see
+<a class="reference external" href="http://www.doughellmann.com/docs/virtualenvwrapper/hooks.html">http://www.doughellmann.com/docs/virtualenvwrapper/hooks.html</a>.</p>
+<p>You can find some lovely hooks to get started at <a class="reference external" href="http://gist.github.com/234301">http://gist.github.com/234301</a>.
+The hook files should go in <tt class="docutils literal"><span class="pre">$WORKON_HOME</span></tt> (<tt class="docutils literal"><span class="pre">$HOME/.virtualenvs</span></tt> from
+above), and <tt class="docutils literal"><span class="pre">premkvirtualenv</span></tt> should be made executable.</p>
+<div class="section" id="premkvirtualenv">
+<h4>premkvirtualenv<a class="headerlink" href="#premkvirtualenv" title="Permalink to this headline">¶</a></h4>
+<p>This hook installs pip and ipython into every virtualenv you create.</p>
+</div>
+<div class="section" id="postactivate">
+<h4>postactivate<a class="headerlink" href="#postactivate" title="Permalink to this headline">¶</a></h4>
+<p>This runs whenever you start a virtual environment.  If you have a virtual
+environment named <tt class="docutils literal"><span class="pre">zamboni</span></tt>, <tt class="docutils literal"><span class="pre">postactivate</span></tt> switches the shell to
+<tt class="docutils literal"><span class="pre">~/dev/zamboni</span></tt> if that directory exists.</p>
+</div>
+</div>
 </div>
 <div class="section" id="getting-packages">
 <h2>Getting Packages<a class="headerlink" href="#getting-packages" title="Permalink to this headline">¶</a></h2>
@@ -97,8 +119,12 @@ source $HOME/.virtualenvwrapper</pre>
 <p>That creates a clean environment named zamboni and (for convenience) initializes
 the environment.  You can get out of the environment by restarting your shell or
 calling <tt class="docutils literal"><span class="pre">deactivate</span></tt>.</p>
-<p>To get back into the zamboni environment, type:</p>
+<p>To get back into the zamboni environment later, type:</p>
 <div class="highlight-python"><pre>workon zamboni</pre>
+</div>
+<p>If you keep your Python binary in a special place (i.e. you don&#8217;t want to use
+the system Python), pass the path to mkvirtualenv with <tt class="docutils literal"><span class="pre">--python</span></tt>:</p>
+<div class="highlight-python"><pre>mkvirtualenv --python=/usr/local/bin/python2.6 --no-site-packages zamboni</pre>
 </div>
 <div class="section" id="pip">
 <h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
@@ -108,7 +134,7 @@ calling <tt class="docutils literal"><span class="pre">deactivate</span></tt>.</
 <p>Since we&#8217;re in our zamboni environment, pip was only installed locally, not
 system-wide.</p>
 <p>zamboni uses a requirements file to tell pip what to install.  Get everything
-you need by running:</p>
+you need by running</p>
 <div class="highlight-python"><pre>pip install -r requirements.txt</pre>
 </div>
 <p>from the root of your zamboni checkout.</p>
@@ -152,7 +178,7 @@ I recommend you do the same.</p>
 <h2>Fin<a class="headerlink" href="#fin" title="Permalink to this headline">¶</a></h2>
 <p>Everything&#8217;s good to go now (assuming you&#8217;ve installed a remora database clone),
 so start up the development server.</p>
-<div class="highlight-python"><pre>python manage.py runserver</pre>
+<div class="highlight-python"><pre>python manage.py runserver 0:8000</pre>
 </div>
 </div>
 </div>
@@ -165,13 +191,20 @@ so start up the development server.</p>
         <div class="sphinxsidebarwrapper">
             <h3><a href="../">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="">Getting Started with zamboni</a><ul>
+<li><a class="reference external" href="">Installing Zamboni</a><ul>
 <li><a class="reference external" href="#requirements">Requirements</a><ul>
 <li><a class="reference external" href="#use-the-source">Use the Source</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#virtualenv">virtualenv</a></li>
-<li><a class="reference external" href="#virtualenvwrapper">virtualenvwrapper</a></li>
+<li><a class="reference external" href="#virtualenvwrapper">virtualenvwrapper</a><ul>
+<li><a class="reference external" href="#virtualenvwrapper-hooks">virtualenvwrapper Hooks</a><ul>
+<li><a class="reference external" href="#premkvirtualenv">premkvirtualenv</a></li>
+<li><a class="reference external" href="#postactivate">postactivate</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference external" href="#getting-packages">Getting Packages</a><ul>
 <li><a class="reference external" href="#pip">pip</a></li>
 </ul>
@@ -183,11 +216,8 @@ so start up the development server.</p>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../"
-                                  title="previous chapter">Welcome to zamboni&#8217;s documentation!</a></p>
-            <h4>Next topic</h4>
             <p class="topless"><a href="../ref/jingo/"
-                                  title="next chapter">A page about Jingo.</a></p>
+                                  title="previous chapter">A page about Jingo.</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../sources/installation.txt"
@@ -221,11 +251,8 @@ so start up the development server.</p>
              >modules</a> |</li>
         <li class="right" >
           <a href="../ref/jingo/" title="A page about Jingo."
-             >next</a> |</li>
-        <li class="right" >
-          <a href="../" title="Welcome to zamboni’s documentation!"
              >previous</a> |</li>
-        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li>
       </ul>
     </div>
     <div class="footer">

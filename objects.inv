@@ -1,9 +1,19 @@
 # Sphinx inventory version 1
 # Project: zamboni
 # Version: 0.1
-jingo.templatetags mod ref/jingo/
+jingo mod ref/jingo/
+jingo.helpers mod ref/jingo/
+translations.fields mod topics/translations/
+translations.models mod topics/translations/
+translations.fields.TranslatedFieldMixin._fetch_translations method topics/translations/
+jingo.helpers.f function ref/jingo/
+translations.models.Translation.new classmethod topics/translations/
 jingo.render function ref/jingo/
-jingo.templatetags.url function ref/jingo/
-jingo.templatetags.f function ref/jingo/
-jingo.templatetags.selected function ref/jingo/
-jingo.templatetags.class_selected function ref/jingo/
+translations.fields.TranslatedFieldMixin._set_translated_fields method topics/translations/
+jingo.helpers.url function ref/jingo/
+translations.fields.TranslatedField class topics/translations/
+jingo.helpers.ifeq function ref/jingo/
+translations.fields.TranslatedFieldMixin class topics/translations/
+jingo.helpers.class_selected function ref/jingo/
+translations.models.TranslationSequence class topics/translations/
+translations.models.Translation class topics/translations/

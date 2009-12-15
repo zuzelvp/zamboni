@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Django, the Good Parts &mdash; zamboni v0.1 documentation</title>
+    <link rel="stylesheet" href="../../static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="up" title="Getting Started" href="../../getting-started/" />
+    <link rel="next" title="Sphinx (but not the Search Engine)" href="../sphinx/" />
+    <link rel="prev" title="Getting Started" href="../../getting-started/" />
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../getting-started/" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li>
+          <li><a href="../../getting-started/" accesskey="U">Getting Started</a> &raquo;</li>
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+
+  <div class="section" id="django-the-good-parts">
+<span id="django"></span><h1>Django, the Good Parts<a class="headerlink" href="#django-the-good-parts" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="http://docs.djangoproject.com/en/dev/">Django docs</a> are the best way to
+learn about Django.  These aren&#8217;t your normal docs.  They&#8217;re useful.</p>
+<p>Read through the
+<a class="reference external" href="http://docs.djangoproject.com/en/dev/intro/overview/">overview</a>, go through
+the <a class="reference external" href="http://docs.djangoproject.com/en/dev/intro/tutorial01/">tutorial</a>, or
+jump into some other part that interests you.  My awesomebar loves these pages:</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/">Querysets</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/">Model Fields</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/cache/">Caching</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/shortcuts/">View Shortcuts</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/">Testing</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/">Urls</a></li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/forms/">Forms</a></li>
+</ul>
+</blockquote>
+<p>I&#8217;m not going to go into detail on anything that&#8217;s covered in the docs, since
+they do it better.</p>
+<div class="section" id="multiple-databases">
+<h2>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this headline">¶</a></h2>
+<p>At this point, most people get by running Django apps with one database.  Crazy,
+I know!  The good news: there was a Summer of Code project this year to add
+multiple-database support.  The bad news: it hasn&#8217;t been merged with Django yet,
+but is a high priority in the
+<a class="reference external" href="http://code.djangoproject.com/wiki/Version1.2Roadmap">1.2 release</a> (scheduled
+for March 9, 2010).  At first I was leaning towards us running the mutlti-db
+branch from <a class="reference external" href="http://github.com/alex/django/tree/multiple-db">http://github.com/alex/django/tree/multiple-db</a>, but I&#8217;m hesitant
+because we&#8217;d miss out on other fixes going on in trunk code right now.  We could
+do our own branch management, but I don&#8217;t know how much time that would take.</p>
+<p>Since the multi-db branch just provides a better low-level API, we&#8217;ll have to
+roll our own master-slave logic anyways, most likely using Django&#8217;s
+<a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/managers/#django.db.models.Manager"><tt class="xref docutils literal"><span class="pre">Managers</span></tt></a>.  There&#8217;s some prior art at
+<a class="reference external" href="http://github.com/mmalone/django-multidb/">http://github.com/mmalone/django-multidb/</a>.  Given this, I don&#8217;t think we&#8217;d gain
+a lot by running off the github multi-db branch.</p>
+</div>
+<div class="section" id="working-off-trunk">
+<h2>Working off Trunk<a class="headerlink" href="#working-off-trunk" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s pretty common to use /trunk rather than a standard release in the Django
+community.  The Django developers are very sensitive about breaking
+backwards compatibility, and are cautious about what goes into trunk, so it&#8217;s a
+relatively safe option.  Since pip lets us pin a git requirement to a certain
+hash, we&#8217;ll all still be running the same Django version, and we won&#8217;t ever hit
+big hurdles upgrading to the next major release.  Test also help here, a lot.</p>
+<p>I (jbalogh) am offering to manage upgrades and any breakages.  I&#8217;ll probably
+move the Django pointer in between our releases so it&#8217;s not constantly
+disruptive, and we&#8217;ll have a full QA cycle to make sure everything still works.</p>
+</div>
+<div class="section" id="migrations">
+<h2>Migrations<a class="headerlink" href="#migrations" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re going to use <a class="reference external" href="http://south.aeracode.org/">South</a>.  Here&#8217;s the
+<a class="reference external" href="http://south.aeracode.org/wiki/QuickStartGuide">Quick Start Guide</a>, the
+<a class="reference external" href="http://south.aeracode.org/wiki/Tutorial1">tutorial</a>, and the rest of the
+<a class="reference external" href="http://south.aeracode.org/wiki/Documentation">South docs</a>.</p>
+</div>
+<div class="section" id="csrf">
+<h2>CSRF<a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h2>
+<p>The standard version of CSRF in Django used to be middleware that rewrote any
+forms it could find in your HTML content to include a hidden token.  That&#8217;s
+going away now.</p>
+<p>Details on the new version can be found at
+<a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/">http://docs.djangoproject.com/en/dev/ref/contrib/csrf/</a>.  I&#8217;ll have to write
+something to make the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">csrf_token</span> <span class="pre">%}</span></tt> tag work with our Jinja templates,
+but the rest will be the same.  It will probably look like
+<tt class="docutils literal"><span class="pre">{%</span> <span class="pre">csrf_token()</span> <span class="pre">%}</span></tt>.</p>
+</div>
+<div class="section" id="id1">
+<h2>Testing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Print it out and read it before you go to bed:
+<a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/">http://docs.djangoproject.com/en/dev/topics/testing/</a></p>
+<p>Don&#8217;t bother with the doctests stuff, we won&#8217;t use those.  We&#8217;ll write lots of
+unit tests and make heavy use of the <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/#module-django.test.client"><tt class="xref docutils literal"><span class="pre">test</span> <span class="pre">client</span></tt></a>.</p>
+<p>We&#8217;re going to use
+<cite>nose &lt;http://somethingaboutorange.com/mrl/projects/nose/0.11.1/&gt;</cite> for test
+discovery and running.  It provides a lot of options like running only the
+failing tests and outputting XUnit-style XML (which is cool if you want to
+Hudson to understand your test results).  Here&#8217;s a nice app to integrate
+nose with Django: <a class="reference external" href="http://github.com/jbalogh/django-nose">http://github.com/jbalogh/django-nose</a>.</p>
+</div>
+<div class="section" id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
+<p>This slide deck has a fantastic overview:
+<a class="reference external" href="http://media.b-list.org/presentations/2008/djangocon/reusable_apps.pdf">http://media.b-list.org/presentations/2008/djangocon/reusable_apps.pdf</a></p>
+<p>The basic layout for Django is to have a bunch of little apps that work together
+to form a site.  The thing that brings these apps together is a &#8220;project&#8221;, which
+holds the top-level settings, url routing, and not much else.  The project tells
+Django what apps you&#8217;re using so it knows what models to use, but any other
+Python packages can be imported at will.  We like importing things.</p>
+<p>Since we&#8217;re going to have a lot of apps, we&#8217;re putting them in the /apps
+directory, but some namespace trickery lets us import our packages without the
+<tt class="docutils literal"><span class="pre">apps.</span></tt> prefix.  If you&#8217;re adding a new app with models or template tags, add
+it to <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> so Django loads the model and Jinja loads the template
+extensions.</p>
+<p>You can find lots of goodies on <a class="reference external" href="http://www.b-list.org/weblog/categories/django/">http://www.b-list.org/weblog/categories/django/</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Django, the Good Parts</a><ul>
+<li><a class="reference external" href="#multiple-databases">Multiple Databases</a></li>
+<li><a class="reference external" href="#working-off-trunk">Working off Trunk</a></li>
+<li><a class="reference external" href="#migrations">Migrations</a></li>
+<li><a class="reference external" href="#csrf">CSRF</a></li>
+<li><a class="reference external" href="#id1">Testing</a></li>
+<li><a class="reference external" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../../getting-started/"
+                                  title="previous chapter">Getting Started</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../sphinx/"
+                                  title="next chapter">Sphinx (but not the Search Engine)</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../sources/topics/django.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search/" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../getting-started/" title="Getting Started"
+             >previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li>
+          <li><a href="../../getting-started/" >Getting Started</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Jeff Balogh.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>
