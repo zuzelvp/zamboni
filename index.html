@@ -20,7 +20,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="" />
-    <link rel="next" title="Installing Zamboni" href="installation/" />
+    <link rel="next" title="Django, the Good Parts" href="topics/django/" />
   </head>
   <body>
     <div class="related">
@@ -33,7 +33,7 @@
           <a href="modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="installation/" title="Installing Zamboni"
+          <a href="topics/django/" title="Django, the Good Parts"
              accesskey="N">next</a> |</li>
         <li><a href="">zamboni v0.1 documentation</a> &raquo;</li>
       </ul>
@@ -46,41 +46,50 @@
 
   <div class="section" id="welcome-to-zamboni-s-documentation">
 <h1>Welcome to zamboni&#8217;s documentation!<a class="headerlink" href="#welcome-to-zamboni-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This is just a start, but imagine how useful real documentation would be for
-writing down our conventions, expectations, tips, and a general index of all the
-pieces we have available.</p>
-<p>While the docs would primarily be a resource for developers, they&#8217;d also be
-useful for that elusive external contributor.</p>
-<p>There&#8217;s support for automatic module/class/function documentation and tons of
-linking goodies.  You can even link to other Sphinx document sites, so we could
-reference Django and Jinja docs inline.  It&#8217;s a little fiddly getting started,
-but super awesome once you get the hang of it.</p>
-<p>If you&#8217;re working on the docs, use <tt class="docutils literal"><span class="pre">make</span> <span class="pre">loop</span></tt> to keep your built pages
-up-to-date.</p>
-<p>Contents:</p>
+<div class="section" id="tip-of-the-day">
+<h2>Tip of the Day<a class="headerlink" href="#tip-of-the-day" title="Permalink to this headline">¶</a></h2>
+<p>Run your tests like this:</p>
+<div class="highlight-python"><pre>python manage.py test --noinput --logging-clear-handlers</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">--noinput</span></tt> tells Django not to ask about creating or destroying test
+databases.</li>
+<li><tt class="docutils literal"><span class="pre">--loggging-clear-handlers</span></tt> tells nose that you don&#8217;t want to see any
+logging output.  Without this, our debug logging will spew all over your
+console during test runs.  This can be useful for debugging, but it&#8217;s not that
+great most of the time.  See the docs for more stuff you can do with
+<a title="(in nose v0.11)" class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/0.11.1/plugins/logcapture.html#module-nose.plugins.logcapture"><tt class="xref docutils literal"><span class="pre">nose</span> <span class="pre">and</span> <span class="pre">logging</span></tt></a>.</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;re just getting started, the <a class="reference external" href="installation/"><em>install</em></a> docs are the best.</p>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="installation/">Installing Zamboni</a><ul>
-<li class="toctree-l2"><a class="reference external" href="installation/#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference external" href="installation/#virtualenv">virtualenv</a></li>
-<li class="toctree-l2"><a class="reference external" href="installation/#virtualenvwrapper">virtualenvwrapper</a></li>
-<li class="toctree-l2"><a class="reference external" href="installation/#getting-packages">Getting Packages</a></li>
-<li class="toctree-l2"><a class="reference external" href="installation/#settings">Settings</a></li>
-<li class="toctree-l2"><a class="reference external" href="installation/#fin">Fin</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/django/">Django, the Good Parts</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/logging/">Logging</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/sphinx/">Sphinx (but not the Search Engine)</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/translations/">Translating Fields on Models</a></li>
+<li class="toctree-l1"><a class="reference external" href="ref/jingo/">A page about Jingo.</a></li>
+<li class="toctree-l1"><a class="reference external" href="installation/">Installing Zamboni</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="getting-started/">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference external" href="getting-started/#topics">Topics</a></li>
-<li class="toctree-l2"><a class="reference external" href="getting-started/#reference">Reference</a></li>
-</ul>
-</li>
+</div>
+<div class="section" id="older-tips">
+<h2>Older Tips<a class="headerlink" href="#older-tips" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If you&#8217;re working on the docs, use <tt class="docutils literal"><span class="pre">make</span> <span class="pre">loop</span></tt> to keep your built pages
+up-to-date.</li>
 </ul>
 <div class="section" id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="genindex/"><em>Index</em></a></li>
 <li><a class="reference external" href="modindex/"><em>Module Index</em></a></li>
 <li><a class="reference external" href="search/"><em>Search Page</em></a></li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -93,14 +102,22 @@ up-to-date.</p>
             <h3><a href="">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Welcome to zamboni&#8217;s documentation!</a><ul>
+<li><a class="reference external" href="#tip-of-the-day">Tip of the Day</a></li>
+<li><a class="reference external" href="#installation">Installation</a></li>
+<li><a class="reference external" href="#contents">Contents</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#older-tips">Older Tips</a><ul>
 <li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
             <h4>Next topic</h4>
-            <p class="topless"><a href="installation/"
-                                  title="next chapter">Installing Zamboni</a></p>
+            <p class="topless"><a href="topics/django/"
+                                  title="next chapter">Django, the Good Parts</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="sources/index.txt"
@@ -133,7 +150,7 @@ up-to-date.</p>
           <a href="modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="installation/" title="Installing Zamboni"
+          <a href="topics/django/" title="Django, the Good Parts"
              >next</a> |</li>
         <li><a href="">zamboni v0.1 documentation</a> &raquo;</li>
       </ul>
