@@ -3,13 +3,16 @@
 # Version: 0.1
 jingo mod ref/jingo/
 jingo.helpers mod ref/jingo/
+caching mod topics/caching/
 translations.fields mod topics/translations/
 translations.models mod topics/translations/
+caching.caching.CachingQuerySet class topics/caching/
 translations.fields.TranslatedFieldMixin._fetch_translations method topics/translations/
 jingo.helpers.f function ref/jingo/
 translations.models.Translation.new classmethod topics/translations/
 jingo.render function ref/jingo/
 translations.fields.TranslatedFieldMixin._set_translated_fields method topics/translations/
+caching.caching.CachingManager class topics/caching/
 jingo.helpers.url function ref/jingo/
 translations.fields.TranslatedField class topics/translations/
 jingo.helpers.ifeq function ref/jingo/
