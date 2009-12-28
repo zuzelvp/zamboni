@@ -20,3 +20,5 @@ translations.fields.TranslatedFieldMixin class topics/translations/
 jingo.helpers.class_selected function ref/jingo/
 translations.models.TranslationSequence class topics/translations/
 translations.models.Translation class topics/translations/
+caching.CachingMixin class topics/caching/
+caching.CachingMixin.cache_key attribute topics/caching/
