@@ -6,8 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Translating Fields on Models &mdash; zamboni v0.1 documentation</title>
-    <link rel="stylesheet" href="../../static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -17,8 +17,8 @@
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../static/jquery.js"></script>
-    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
     <link rel="next" title="A page about Jingo." href="../../ref/jingo/" />
     <link rel="prev" title="Sphinx (but not the Search Engine)" href="../sphinx/" />
@@ -70,7 +70,7 @@ of translation rows.</p>
 model&#8217;s translations during initialization.  It first tries to fetch strings for
 the current locale, and then looks for any missing strings in the default
 locale.  If you want to change this behavior, it should be enough to override
-<a title="translations.fields.TranslatedFieldMixin._fetch_translations" class="reference internal" href="#translations.fields.TranslatedFieldMixin._fetch_translations"><tt class="xref docutils literal"><span class="pre">_fetch_translations</span></tt></a>.</p>
+<a title="translations.fields.TranslatedFieldMixin.fetch_translations" class="reference internal" href="#translations.fields.TranslatedFieldMixin.fetch_translations"><tt class="xref docutils literal"><span class="pre">fetch_translations()</span></tt></a>.</p>
 <div class="section" id="creating-new-translations">
 <h2>Creating New Translations<a class="headerlink" href="#creating-new-translations" title="Permalink to this headline">¶</a></h2>
 <p>If you need to create new
@@ -99,13 +99,8 @@ an existing translation.</p>
 <em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedFieldMixin</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mixin that fetches all <tt class="docutils literal"><span class="pre">TranslatedFields</span></tt> after instantiation.</p>
 <dl class="method">
-<dt id="translations.fields.TranslatedFieldMixin._set_translated_fields">
-<tt class="descname">_set_translated_fields</tt><big>(</big><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin._set_translated_fields" title="Permalink to this definition">¶</a></dt>
-<dd>Fetch and attach all of this object&#8217;s translations.</dd></dl>
-
-<dl class="method">
-<dt id="translations.fields.TranslatedFieldMixin._fetch_translations">
-<tt class="descname">_fetch_translations</tt><big>(</big><em>ids</em>, <em>lang</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin._fetch_translations" title="Permalink to this definition">¶</a></dt>
+<dt id="translations.fields.TranslatedFieldMixin.fetch_translations">
+<tt class="descname">fetch_translations</tt><big>(</big><em>ids</em>, <em>lang</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin.fetch_translations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the query for finding Translation objects.</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">ids</span></tt> is a list of the foreign keys to the object&#8217;s translations</li>
@@ -159,7 +154,7 @@ key to this model.</p>
                                   title="next chapter">A page about Jingo.</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="../../sources/topics/translations.txt"
+              <li><a href="../../_sources/topics/translations.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">

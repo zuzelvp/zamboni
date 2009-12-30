@@ -6,8 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Cache is King &mdash; zamboni v0.1 documentation</title>
-    <link rel="stylesheet" href="../../static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -17,8 +17,8 @@
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../static/jquery.js"></script>
-    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
     <link rel="next" title="Django, the Good Parts" href="../django/" />
     <link rel="prev" title="Welcome to zamboni’s documentation!" href="../../" />
@@ -50,7 +50,7 @@
 
   <div class="section" id="module-caching">
 <span id="caching"></span><h1>Cache is King<a class="headerlink" href="#module-caching" title="Permalink to this headline">¶</a></h1>
-<p>To enable caching for a model, add the <a title="caching.caching.CachingManager" class="reference internal" href="#caching.caching.CachingManager"><tt class="xref docutils literal"><span class="pre">CachingManager</span></tt></a> to that
+<p>To enable caching for a model, add the <a title="caching.CachingManager" class="reference internal" href="#caching.CachingManager"><tt class="xref docutils literal"><span class="pre">CachingManager</span></tt></a> to that
 class and inherit from the <a title="caching.CachingMixin" class="reference internal" href="#caching.CachingMixin"><tt class="xref docutils literal"><span class="pre">CachingMixin</span></tt></a>.  If you want related
 (foreign key) lookups to hit the cache, <tt class="docutils literal"><span class="pre">CachingManager</span></tt> must be the default
 manager.  If you have multiple managers that should be cached, return a
@@ -100,11 +100,22 @@ deleting so we don&#8217;t have any race condtions where:</p>
 <div class="section" id="classes-that-may-interest-you">
 <h2>Classes that May Interest You<a class="headerlink" href="#classes-that-may-interest-you" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="caching.caching.CachingManager">
-<em class="property">class </em><tt class="descclassname">caching.</tt><tt class="descname">CachingManager</tt><a class="headerlink" href="#caching.caching.CachingManager" title="Permalink to this definition">¶</a></dt>
-<dd>This <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/managers/#django.db.models.Manager"><tt class="xref docutils literal"><span class="pre">manager</span></tt></a> always returns a
+<dt id="caching.CachingManager">
+<em class="property">class </em><tt class="descclassname">caching.</tt><tt class="descname">CachingManager</tt><a class="headerlink" href="#caching.CachingManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>This <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/managers/#django.db.models.Manager"><tt class="xref docutils literal"><span class="pre">manager</span></tt></a> always returns a
 <a title="caching.caching.CachingQuerySet" class="reference internal" href="#caching.caching.CachingQuerySet"><tt class="xref docutils literal"><span class="pre">CachingQuerySet</span></tt></a>, and hooks up <tt class="docutils literal"><span class="pre">post_save</span></tt> and
-<tt class="docutils literal"><span class="pre">post_delete</span></tt> signals to invalidate caches.</dd></dl>
+<tt class="docutils literal"><span class="pre">post_delete</span></tt> signals to invalidate caches.</p>
+<dl class="method">
+<dt id="caching.CachingManager.invalidate">
+<tt class="descname">invalidate</tt><big>(</big><em>*objects</em><big>)</big><a class="headerlink" href="#caching.CachingManager.invalidate" title="Permalink to this definition">¶</a></dt>
+<dd>Invalidate all the flush lists associated with <tt class="docutils literal"><span class="pre">objects</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="caching.CachingManager.invalidate_keys">
+<tt class="descname">invalidate_keys</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#caching.CachingManager.invalidate_keys" title="Permalink to this definition">¶</a></dt>
+<dd>Invalidate all the flush lists named by the list of <tt class="docutils literal"><span class="pre">keys</span></tt>.</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="caching.CachingMixin">
@@ -148,7 +159,7 @@ from cache before hitting the database.</dd></dl>
                                   title="next chapter">Django, the Good Parts</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="../../sources/topics/caching.txt"
+              <li><a href="../../_sources/topics/caching.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
