@@ -2,6 +2,7 @@
 # Project: zamboni
 # Version: 0.1
 translations.fields mod topics/translations/
+access mod topics/acl/
 jingo.helpers mod ref/jingo/
 caching mod topics/caching/
 multidb mod topics/multidb/
