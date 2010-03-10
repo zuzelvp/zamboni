@@ -20,7 +20,6 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="A page about Jingo." href="../../ref/jingo/" />
     <link rel="prev" title="Testing" href="../testing/" /> 
   </head>
   <body>
@@ -33,9 +32,6 @@
         <li class="right" >
           <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
-        <li class="right" >
-          <a href="../../ref/jingo/" title="A page about Jingo."
-             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
              accesskey="P">previous</a> |</li>
@@ -57,15 +53,15 @@ want to create a foreign key to the <tt class="docutils literal"><span class="pr
 <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">django.db.models.ForeignKey</span></tt></a> to make it work with our special handling
 of translation rows.</p>
 <p>A minimal Addon model looks like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">amo</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">amo.models</span>
 <span class="kn">from</span> <span class="nn">translations.fields</span> <span class="kn">import</span> <span class="n">TranslatedField</span>
 
-<span class="k">class</span> <span class="nc">Addon</span><span class="p">(</span><span class="n">amo</span><span class="o">.</span><span class="n">ModelBase</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Addon</span><span class="p">(</span><span class="n">amo</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ModelBase</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">TranslatedField</span><span class="p">()</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">TranslatedField</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><tt class="xref docutils literal"><span class="pre">amo.ModelBase</span></tt> inherits from
+<p><tt class="xref docutils literal"><span class="pre">amo.models.ModelBase</span></tt> inherits from
 <a title="translations.fields.TranslatedFieldMixin" class="reference internal" href="#translations.fields.TranslatedFieldMixin"><tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedFieldMixin</span></tt></a>, which fetches all of a
 model&#8217;s translations during initialization.  It first tries to fetch strings for
 the current locale, and then looks for any missing strings in the default
@@ -91,7 +87,7 @@ an existing translation.</p>
 <h2><tt class="docutils literal"><span class="pre">translations.fields</span></tt><a class="headerlink" href="#module-translations.fields" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="translations.fields.TranslatedField">
-<em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedField</tt><a class="headerlink" href="#translations.fields.TranslatedField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedField</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedField" title="Permalink to this definition">¶</a></dt>
 <dd>A foreign key to the translations table.</dd></dl>
 
 <dl class="class">
@@ -149,9 +145,6 @@ key to this model.</p>
             <h4>Previous topic</h4>
             <p class="topless"><a href="../testing/"
                                   title="previous chapter">Testing</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="../../ref/jingo/"
-                                  title="next chapter">A page about Jingo.</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../../_sources/topics/translations.txt"
@@ -183,9 +176,6 @@ key to this model.</p>
         <li class="right" >
           <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../ref/jingo/" title="A page about Jingo."
-             >next</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
              >previous</a> |</li>

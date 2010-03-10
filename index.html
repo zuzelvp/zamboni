@@ -48,7 +48,58 @@
 <h1>Welcome to zamboni&#8217;s documentation!<a class="headerlink" href="#welcome-to-zamboni-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="tip-of-the-day">
 <h2>Tip of the Day<a class="headerlink" href="#tip-of-the-day" title="Permalink to this headline">¶</a></h2>
-<p>Run your tests like this:</p>
+<div class="section" id="gettext-in-javascript">
+<h3>gettext in Javascript<a class="headerlink" href="#gettext-in-javascript" title="Permalink to this headline">¶</a></h3>
+<p>We have gettext in javascript!  Just mark your strings with <tt class="docutils literal"><span class="pre">gettext()</span></tt> or
+<tt class="docutils literal"><span class="pre">ngettext()</span></tt>.  There isn&#8217;t an <tt class="docutils literal"><span class="pre">_</span></tt> alias right now, since underscore.js has
+that.  If we end up with a lot of js translations, we can fix that.  Check it
+out:</p>
+<div class="highlight-python"><pre>cd locale
+./extract-po.py -d javascript
+pybabel init -l en_US -d . -i javascript.pot -D javascript
+perl -pi -e 's/fuzzy//' en_US/LC_MESSAGES/javascript.po
+pybabel compile -d . -D javascript
+open http://0:8000/en-US/jsi18n/</pre>
+</div>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;re just getting started, the <a class="reference external" href="topics/installation/#installation"><em>install</em></a> docs are the best.</p>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="topics/acl/">Access Control Lists</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/django/">Django, the Good Parts</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/installation/">Installing Zamboni</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/logging/">Logging</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/production/">Zamboni in Production</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/search/">Search (powered by Sphinx, but not the documenter)</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/sphinx/">Sphinx (but not the Search Engine)</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/testing/">Testing</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/translations/">Translating Fields on Models</a></li>
+</ul>
+</div>
+<div class="section" id="older-tips">
+<h2>Older Tips<a class="headerlink" href="#older-tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="git-bisect">
+<h3>Git Bisect<a class="headerlink" href="#git-bisect" title="Permalink to this headline">¶</a></h3>
+<p>Did you break something recently?  Are you wondering which commit started the
+problem?</p>
+<div class="highlight-python"><pre>git bisect start
+git bisect bad
+git bisect good &lt;master&gt;  # Put the known-good commit here.
+git bisect run fab test
+git bisect reset</pre>
+</div>
+<p>Git will churn for a while, running tests, and will eventually tell you where
+you suck.  See the git-bisect man page for more details.</p>
+</div>
+<div class="section" id="running-tests">
+<h3>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Run your tests like this:</p>
 <div class="highlight-python"><pre>python manage.py test --noinput --logging-clear-handlers</pre>
 </div>
 <ul class="simple">
@@ -60,39 +111,22 @@ console during test runs.  This can be useful for debugging, but it&#8217;s not 
 great most of the time.  See the docs for more stuff you can do with
 <a title="(in nose v0.11)" class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/0.11.1/plugins/logcapture.html#module-nose.plugins.logcapture"><tt class="xref docutils literal"><span class="pre">nose</span> <span class="pre">and</span> <span class="pre">logging</span></tt></a>.</li>
 </ul>
-</div>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>If you&#8217;re just getting started, the <a class="reference external" href="installation/"><em>install</em></a> docs are the best.</p>
-</div>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="topics/acl/">Access Control Lists</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/caching/">Cache is King</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/django/">Django, the Good Parts</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/logging/">Logging</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/multidb/">Master/Slave Databasing</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/production/">Zamboni in Production</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/sphinx/">Sphinx (but not the Search Engine)</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/testing/">Testing</a></li>
-<li class="toctree-l1"><a class="reference external" href="topics/translations/">Translating Fields on Models</a></li>
-<li class="toctree-l1"><a class="reference external" href="ref/jingo/">A page about Jingo.</a></li>
-<li class="toctree-l1"><a class="reference external" href="installation/">Installing Zamboni</a></li>
+</li>
 </ul>
 </div>
-<div class="section" id="older-tips">
-<h2>Older Tips<a class="headerlink" href="#older-tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="building-docs">
+<h3>Building Docs<a class="headerlink" href="#building-docs" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>If you&#8217;re working on the docs, use <tt class="docutils literal"><span class="pre">make</span> <span class="pre">loop</span></tt> to keep your built pages
 up-to-date.</li>
 </ul>
+</div>
 <div class="section" id="indices-and-tables">
 <h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="genindex/"><em>Index</em></a></li>
 <li><a class="reference external" href="modindex/"><em>Module Index</em></a></li>
-<li><a class="reference external" href="search/"><em>Search Page</em></a></li>
+<li><a class="reference external" href="topics/search/#search"><em>Search (powered by Sphinx, but not the documenter)</em></a></li>
 </ul>
 </div>
 </div>
@@ -107,12 +141,18 @@ up-to-date.</li>
             <h3><a href="">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Welcome to zamboni&#8217;s documentation!</a><ul>
-<li><a class="reference external" href="#tip-of-the-day">Tip of the Day</a></li>
+<li><a class="reference external" href="#tip-of-the-day">Tip of the Day</a><ul>
+<li><a class="reference external" href="#gettext-in-javascript">gettext in Javascript</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#installation">Installation</a></li>
 <li><a class="reference external" href="#contents">Contents</a><ul>
 </ul>
 </li>
 <li><a class="reference external" href="#older-tips">Older Tips</a><ul>
+<li><a class="reference external" href="#git-bisect">Git Bisect</a></li>
+<li><a class="reference external" href="#running-tests">Running Tests</a></li>
+<li><a class="reference external" href="#building-docs">Building Docs</a></li>
 <li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>

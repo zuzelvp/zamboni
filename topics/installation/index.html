@@ -6,36 +6,40 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>Installing Zamboni &mdash; zamboni v0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
+        URL_ROOT:    '../../',
         VERSION:     '0.1',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="zamboni v0.1 documentation" href="../" />
-    <link rel="prev" title="A page about Jingo." href="../ref/jingo/" /> 
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="next" title="Logging" href="../logging/" />
+    <link rel="prev" title="Django, the Good Parts" href="../django/" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex/" title="General Index"
+          <a href="../../genindex/" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../modindex/" title="Global Module Index"
+          <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="../ref/jingo/" title="A page about Jingo."
+          <a href="../logging/" title="Logging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../django/" title="Django, the Good Parts"
              accesskey="P">previous</a> |</li>
-        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -149,9 +153,9 @@ settings into <tt class="docutils literal"><span class="pre">settings_local.py</
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
-<p>in your <tt class="docutils literal"><span class="pre">settings_local.py</span></tt> so that all of the configuration is included.  If
-you want to override anything, put that import at the top and then redefine
-whatever parameters you want.  This is my <tt class="docutils literal"><span class="pre">settings_local.py</span></tt>:</p>
+<p>in your <tt class="docutils literal"><span class="pre">settings_local.py</span></tt> so that all of the configuration is included.
+The settings template for developers, included below, is at
+<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings/settings_local.dev.py">settings/settings_local.dev.py</a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
 
 
@@ -160,8 +164,10 @@ whatever parameters you want.  This is my <tt class="docutils literal"><span cla
         <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;zamboni&#39;</span><span class="p">,</span>
         <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
         <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;jbalogh&#39;</span><span class="p">,</span>
-        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;xxx&#39;</span><span class="p">,</span>
         <span class="s">&#39;OPTIONS&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s">&#39;init_command&#39;</span><span class="p">:</span> <span class="s">&#39;SET storage_engine=InnoDB&#39;</span><span class="p">},</span>
+        <span class="s">&#39;TEST_CHARSET&#39;</span><span class="p">:</span> <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+        <span class="s">&#39;TEST_COLLATION&#39;</span><span class="p">:</span> <span class="s">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">}</span>
 
@@ -170,10 +176,11 @@ whatever parameters you want.  This is my <tt class="docutils literal"><span cla
 <span class="n">INTERNAL_IPS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,)</span>
 <span class="n">INSTALLED_APPS</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&#39;debug_toolbar&#39;</span><span class="p">,)</span>
 
-<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;memcached://localhost:11211&#39;</span>
-<span class="n">CACHE_DURATION</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;caching.backends.memcached://localhost:11211?timeout=500&#39;</span>
 
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">DEBUG_PROPAGATE_EXCEPTIONS</span> <span class="o">=</span> <span class="n">DEBUG</span>
 </pre></div>
 </div>
 <p>I&#8217;m overriding the database parameters from <tt class="docutils literal"><span class="pre">settings.py</span></tt> and then extending
@@ -181,10 +188,28 @@ whatever parameters you want.  This is my <tt class="docutils literal"><span cla
 Toolbar</a>.  It&#8217;s awesome, and
 I recommend you do the same.</p>
 </div>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>If you have access, I recommend you use <a class="reference external" href="http://gist.github.com/273575">http://gist.github.com/273575</a> to create
+a small database from the production db.  Otherwise, let Django create the
+database schema for you.  Either way, run</p>
+<div class="highlight-python"><pre>django syncdb --noinput</pre>
+</div>
+<p>to get the auth and admin tables from Django.</p>
+<p>At the moment, we&#8217;re tracking Django&#8217;s trunk, and South does not work.  So we&#8217;ll
+have to do database migrations manually.  I hope there aren&#8217;t too many.</p>
+<div class="highlight-python"><pre>ALTER TABLE `users`
+    ADD COLUMN `user_id` INTEGER,
+    ADD CONSTRAINT `user_id_refs_id_eb1f4611` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);</pre>
+</div>
+<p>Then pipe this file into your mysql:</p>
+<div class="highlight-python"><pre>cat apps/cake/sql/session.sql | mysql ...</pre>
+</div>
+<p>What a mess!</p>
+</div>
 <div class="section" id="fin">
 <h2>Fin<a class="headerlink" href="#fin" title="Permalink to this headline">¶</a></h2>
-<p>Everything&#8217;s good to go now (assuming you&#8217;ve installed a remora database clone),
-so start up the development server.</p>
+<p>Everything&#8217;s good to go now so start up the development server.</p>
 <div class="highlight-python"><pre>python manage.py runserver 0:8000</pre>
 </div>
 </div>
@@ -196,7 +221,7 @@ so start up the development server.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../">Table Of Contents</a></h3>
+            <h3><a href="../../">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Installing Zamboni</a><ul>
 <li><a class="reference external" href="#requirements">Requirements</a><ul>
@@ -217,22 +242,26 @@ so start up the development server.</p>
 </ul>
 </li>
 <li><a class="reference external" href="#settings">Settings</a></li>
+<li><a class="reference external" href="#database">Database</a></li>
 <li><a class="reference external" href="#fin">Fin</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../ref/jingo/"
-                                  title="previous chapter">A page about Jingo.</a></p>
+            <p class="topless"><a href="../django/"
+                                  title="previous chapter">Django, the Good Parts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../logging/"
+                                  title="next chapter">Logging</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="../_sources/installation.txt"
+              <li><a href="../../_sources/topics/installation.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
             <h3>Quick search</h3>
-              <form class="search" action="../search/" method="get">
+              <form class="search" action="../../search/" method="get">
                 <input type="text" name="q" size="18" />
                 <input type="submit" value="Go" />
                 <input type="hidden" name="check_keywords" value="yes" />
@@ -251,15 +280,18 @@ so start up the development server.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex/" title="General Index"
+          <a href="../../genindex/" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../modindex/" title="Global Module Index"
+          <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../ref/jingo/" title="A page about Jingo."
+          <a href="../logging/" title="Logging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../django/" title="Django, the Good Parts"
              >previous</a> |</li>
-        <li><a href="../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

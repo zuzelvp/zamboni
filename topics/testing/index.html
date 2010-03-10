@@ -84,7 +84,15 @@ great most of the time.  See the docs for more stuff you can do with
 </ul>
 <p>Our continuous integration server adds some additional flags for other features
 (for example, coverage statistics).  To see what those commands are check out
-the build script at <tt class="docutils literal"><span class="pre">/scripts/build.sh</span></tt>.</p>
+the build script at <a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/scripts/build.sh">scripts/build.sh</a>.</p>
+<div class="section" id="database-setup">
+<h3>Database Setup<a class="headerlink" href="#database-setup" title="Permalink to this headline">¶</a></h3>
+<p>Our test runner will try as hard as it can to skip creating a fresh database
+every time.  If you really want to make a new database (e.g. when models have
+changed), set the environment variable <tt class="docutils literal"><span class="pre">FORCE_DB</span></tt>.</p>
+<div class="highlight-python"><pre>FORCE_DB=true python manage.py test</pre>
+</div>
+</div>
 </div>
 <div class="section" id="writing-tests">
 <h2>Writing Tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
@@ -117,7 +125,10 @@ Full Selenium documentation is available:
             <ul>
 <li><a class="reference external" href="">Testing</a><ul>
 <li><a class="reference external" href="#configuration">Configuration</a></li>
-<li><a class="reference external" href="#running-tests">Running Tests</a></li>
+<li><a class="reference external" href="#running-tests">Running Tests</a><ul>
+<li><a class="reference external" href="#database-setup">Database Setup</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#writing-tests">Writing Tests</a><ul>
 <li><a class="reference external" href="#unit-tests">Unit Tests</a></li>
 <li><a class="reference external" href="#selenium-tests">Selenium Tests</a></li>

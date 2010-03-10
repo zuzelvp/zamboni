@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Sphinx (but not the Search Engine) &mdash; zamboni v0.1 documentation</title>
+    <title>Search (powered by Sphinx, but not the documenter) &mdash; zamboni v0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -20,8 +20,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="Testing" href="../testing/" />
-    <link rel="prev" title="Search (powered by Sphinx, but not the documenter)" href="../search/" /> 
+    <link rel="next" title="Sphinx (but not the Search Engine)" href="../sphinx/" />
+    <link rel="prev" title="Zamboni in Production" href="../production/" /> 
   </head>
   <body>
     <div class="related">
@@ -34,10 +34,10 @@
           <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="../testing/" title="Testing"
+          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
+          <a href="../production/" title="Zamboni in Production"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -48,56 +48,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="sphinx-but-not-the-search-engine">
-<span id="sphinx"></span><h1>Sphinx (but not the Search Engine)<a class="headerlink" href="#sphinx-but-not-the-search-engine" title="Permalink to this headline">¶</a></h1>
-<p>For a reStructuredText Primer, see <a class="reference external" href="http://sphinx.pocoo.org/rest.html">http://sphinx.pocoo.org/rest.html</a>.</p>
-<div class="section" id="sections">
-<h2>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h2>
-<p>Sphinx doesn&#8217;t care what punctuation you use for marking headings, but each new
-kind that it sees means one level lower in the outline.  So,</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------</pre>
+  <div class="section" id="search-powered-by-sphinx-but-not-the-documenter">
+<span id="search"></span><h1>Search (powered by Sphinx, but not the documenter)<a class="headerlink" href="#search-powered-by-sphinx-but-not-the-documenter" title="Permalink to this headline">¶</a></h1>
+<p>Search is powered by <a class="reference external" href="http://sphinxsearch.com">Sphinx</a>.  It allows us to do
+very fast full-text search and avoid hitting the mysql databases or polluting
+them with search-related data.</p>
+<div class="section" id="production">
+<h2>Production<a class="headerlink" href="#production" title="Permalink to this headline">¶</a></h2>
+<p>Production at peak load based on log analysis done in 2009 suggests that we
+serve 10q/s.</p>
+<p>Sphinx is served from two load balanced nodes that also serve sphinx for
+preview and SUMO.</p>
 </div>
-<p>will correspond to</p>
-<div class="highlight-python"><pre>&lt;h1&gt;Heading 1&lt;/h1&gt;
-&lt;h2&gt;Heading 2&lt;/h2&gt;</pre>
-</div>
-<p>For consistency, this is what I&#8217;m using for headings in Zamboni:</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------
-
-Heading 3
-~~~~~~~~~
-
-Heading 4
-*********
-
-Heading 5
-+++++++++
-
-Heading 6
-^^^^^^^^^</pre>
-</div>
-<p>Use two newlines prior to a new heading.  I&#8217;m only using one here for space
-efficiency.</p>
-</div>
-<div class="section" id="sphinx-extras">
-<h2>Sphinx Extras<a class="headerlink" href="#sphinx-extras" title="Permalink to this headline">¶</a></h2>
-<p>Use <tt class="docutils literal"><span class="pre">:src:`path/to/file.py`</span></tt> to link to source files online.  Example:
-<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings.py">settings.py</a>.</p>
-</div>
-<div class="section" id="vim">
-<h2>Vim<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h2>
-<p>Here&#8217;s a nice macro for creating headings:</p>
-<div class="highlight-python"><pre>let @h = "yypVr"</pre>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Testing of Sphinx can be remarkably slower since Sphinx needs to populate
+tables and truncate tables for each test.  If you are trying to run a quick
+test you can always omit Sphinx:</p>
+<div class="highlight-python"><pre>./manage.py test -a\!sphinx</pre>
 </div>
 </div>
 </div>
@@ -110,23 +78,22 @@ efficiency.</p>
         <div class="sphinxsidebarwrapper">
             <h3><a href="../../">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="">Sphinx (but not the Search Engine)</a><ul>
-<li><a class="reference external" href="#sections">Sections</a></li>
-<li><a class="reference external" href="#sphinx-extras">Sphinx Extras</a></li>
-<li><a class="reference external" href="#vim">Vim</a></li>
+<li><a class="reference external" href="">Search (powered by Sphinx, but not the documenter)</a><ul>
+<li><a class="reference external" href="#production">Production</a></li>
+<li><a class="reference external" href="#testing">Testing</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../search/"
-                                  title="previous chapter">Search (powered by Sphinx, but not the documenter)</a></p>
+            <p class="topless"><a href="../production/"
+                                  title="previous chapter">Zamboni in Production</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="../testing/"
-                                  title="next chapter">Testing</a></p>
+            <p class="topless"><a href="../sphinx/"
+                                  title="next chapter">Sphinx (but not the Search Engine)</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="../../_sources/topics/sphinx.txt"
+              <li><a href="../../_sources/topics/search.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -156,10 +123,10 @@ efficiency.</p>
           <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../testing/" title="Testing"
+          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
              >next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
+          <a href="../production/" title="Zamboni in Production"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>

@@ -20,8 +20,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="Sphinx (but not the Search Engine)" href="../sphinx/" />
-    <link rel="prev" title="Master/Slave Databasing" href="../multidb/" /> 
+    <link rel="next" title="Search (powered by Sphinx, but not the documenter)" href="../search/" />
+    <link rel="prev" title="Logging" href="../logging/" /> 
   </head>
   <body>
     <div class="related">
@@ -34,10 +34,10 @@
           <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../multidb/" title="Master/Slave Databasing"
+          <a href="../logging/" title="Logging"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -59,14 +59,18 @@ git submodule update --init</pre>
 <p>You&#8217;re going to need virtualenv and pip, but I&#8217;ll let you figure that one out.</p>
 <p>We rely on one compiled package, MySQLdb.  It needs to link against the
 mysql-dev headers, so install that one system-wide.  The rest of our packages
-should be installed in a virtualenv using pip:</p>
+should be installed in a virtualenv using pip.  If you&#8217;re oremj, do this:</p>
+<div class="highlight-python"><pre>pip install http://sm-hudson01.mozilla.org:8080/job/addons.mozilla.org/ws/packages/amo.pybundle</pre>
+</div>
+<p>Otherwise, get them from the internet like this:</p>
 <div class="highlight-python"><pre>pip install -r requirements-prod.txt</pre>
 </div>
 </div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>We keep most of our config in <tt class="docutils literal"><span class="pre">settings.py</span></tt> under version control.  Local
-config can be overridden in <tt class="docutils literal"><span class="pre">settings_local.py</span></tt>:</p>
+config can be overridden in <tt class="docutils literal"><span class="pre">settings_local.py</span></tt>.  This template, inlined
+below,  can be found at <a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings/settings_local.prod.py">settings/settings_local.prod.py</a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
@@ -98,13 +102,17 @@ config can be overridden in <tt class="docutils literal"><span class="pre">setti
 <span class="n">SLAVE_DATABASES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;slave&#39;</span><span class="p">]</span>
 
 <span class="c"># Use IP:PORT pairs separated by semicolons.</span>
-<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;memcached://localhost:11211;localhost:11212&#39;</span>
-
-<span class="c"># Default time (in seconds) to cache objects.</span>
-<span class="n">CACHE_DURATION</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;caching.backends.memcached://localhost:11211;localhost:11212?timeout=500&#39;</span>
 
 <span class="c"># This is used to hash some things in Django.</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;replace me with something long&#39;</span>
+
+<span class="c"># Remove any apps that are only needed for development.</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">app</span> <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">INSTALLED_APPS</span> <span class="k">if</span> <span class="n">app</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DEV_APPS</span><span class="p">)</span>
+
+<span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+
+<span class="n">DEBUG_PROPAGATE_EXCEPTIONS</span> <span class="o">=</span> <span class="n">DEBUG</span>
 </pre></div>
 </div>
 </div>
@@ -112,7 +120,7 @@ config can be overridden in <tt class="docutils literal"><span class="pre">setti
 <h2>Setting up mod_wsgi<a class="headerlink" href="#setting-up-mod-wsgi" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://docs.djangoproject.com/en/dev/howto/deployment/modwsgi/">http://docs.djangoproject.com/en/dev/howto/deployment/modwsgi/</a></p>
 <p><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide">http://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide</a></p>
-<p>Here&#8217;s a basic http.conf snippet that I used to get zamboni running on my Mac:</p>
+<p>Here&#8217;s a basic httpd.conf snippet that I used to get zamboni running on my Mac:</p>
 <div class="highlight-python"><pre># WSGI
 LoadModule wsgi_module modules/mod_wsgi.so
 WSGIPythonHome /Users/jeff/.virtualenvs/baseline
@@ -123,7 +131,7 @@ WSGIPythonHome /Users/jeff/.virtualenvs/baseline
     ServerName 127.0.0.1
     WSGIScriptAlias / /Users/jeff/dev/zamboni/wsgi/zamboni.wsgi
 
-    WSGIDaemonProcess zamboni processes=8 threads=10 \
+    WSGIDaemonProcess zamboni processes=8 threads=1 \
         python-path=/Users/jeff/.virtualenvs/zamboni/lib/python2.6/site-packages
     WSGIProcessGroup zamboni
 
@@ -164,11 +172,11 @@ zamboni virtualenv.</p>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../multidb/"
-                                  title="previous chapter">Master/Slave Databasing</a></p>
+            <p class="topless"><a href="../logging/"
+                                  title="previous chapter">Logging</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="../sphinx/"
-                                  title="next chapter">Sphinx (but not the Search Engine)</a></p>
+            <p class="topless"><a href="../search/"
+                                  title="next chapter">Search (powered by Sphinx, but not the documenter)</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../../_sources/topics/production.txt"
@@ -201,10 +209,10 @@ zamboni virtualenv.</p>
           <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
              >next</a> |</li>
         <li class="right" >
-          <a href="../multidb/" title="Master/Slave Databasing"
+          <a href="../logging/" title="Logging"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>

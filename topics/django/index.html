@@ -20,8 +20,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="Logging" href="../logging/" />
-    <link rel="prev" title="Cache is King" href="../caching/" /> 
+    <link rel="next" title="Installing Zamboni" href="../installation/" />
+    <link rel="prev" title="Access Control Lists" href="../acl/" /> 
   </head>
   <body>
     <div class="related">
@@ -34,10 +34,10 @@
           <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="../logging/" title="Logging"
+          <a href="../installation/" title="Installing Zamboni"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../caching/" title="Cache is King"
+          <a href="../acl/" title="Access Control Lists"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -69,65 +69,25 @@ jump into some other part that interests you.  My awesomebar loves these pages:<
 </blockquote>
 <p>I&#8217;m not going to go into detail on anything that&#8217;s covered in the docs, since
 they do it better.</p>
-<div class="section" id="multiple-databases">
-<h2>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this headline">¶</a></h2>
-<p>At this point, most people get by running Django apps with one database.  Crazy,
-I know!  The good news: there was a Summer of Code project this year to add
-multiple-database support.  The bad news: it hasn&#8217;t been merged with Django yet,
-but is a high priority in the
-<a class="reference external" href="http://code.djangoproject.com/wiki/Version1.2Roadmap">1.2 release</a> (scheduled
-for March 9, 2010).  At first I was leaning towards us running the mutlti-db
-branch from <a class="reference external" href="http://github.com/alex/django/tree/multiple-db">http://github.com/alex/django/tree/multiple-db</a>, but I&#8217;m hesitant
-because we&#8217;d miss out on other fixes going on in trunk code right now.  We could
-do our own branch management, but I don&#8217;t know how much time that would take.</p>
-<p>Since the multi-db branch just provides a better low-level API, we&#8217;ll have to
-roll our own master-slave logic anyways, most likely using Django&#8217;s
-<a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/managers/#django.db.models.Manager"><tt class="xref docutils literal"><span class="pre">Managers</span></tt></a>.  There&#8217;s some prior art at
-<a class="reference external" href="http://github.com/mmalone/django-multidb/">http://github.com/mmalone/django-multidb/</a>.  Given this, I don&#8217;t think we&#8217;d gain
-a lot by running off the github multi-db branch.</p>
-</div>
-<div class="section" id="working-off-trunk">
-<h2>Working off Trunk<a class="headerlink" href="#working-off-trunk" title="Permalink to this headline">¶</a></h2>
-<p>It&#8217;s pretty common to use /trunk rather than a standard release in the Django
-community.  The Django developers are very sensitive about breaking
-backwards compatibility, and are cautious about what goes into trunk, so it&#8217;s a
-relatively safe option.  Since pip lets us pin a git requirement to a certain
-hash, we&#8217;ll all still be running the same Django version, and we won&#8217;t ever hit
-big hurdles upgrading to the next major release.  Test also help here, a lot.</p>
-<p>I (jbalogh) am offering to manage upgrades and any breakages.  I&#8217;ll probably
-move the Django pointer in between our releases so it&#8217;s not constantly
-disruptive, and we&#8217;ll have a full QA cycle to make sure everything still works.</p>
-</div>
-<div class="section" id="migrations">
-<h2>Migrations<a class="headerlink" href="#migrations" title="Permalink to this headline">¶</a></h2>
-<p>We&#8217;re going to use <a class="reference external" href="http://south.aeracode.org/">South</a>.  Here&#8217;s the
-<a class="reference external" href="http://south.aeracode.org/wiki/QuickStartGuide">Quick Start Guide</a>, the
-<a class="reference external" href="http://south.aeracode.org/wiki/Tutorial1">tutorial</a>, and the rest of the
-<a class="reference external" href="http://south.aeracode.org/wiki/Documentation">South docs</a>.</p>
-</div>
 <div class="section" id="csrf">
 <h2>CSRF<a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h2>
-<p>The standard version of CSRF in Django used to be middleware that rewrote any
-forms it could find in your HTML content to include a hidden token.  That&#8217;s
-going away now.</p>
-<p>Details on the new version can be found at
-<a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/">http://docs.djangoproject.com/en/dev/ref/contrib/csrf/</a>.  I&#8217;ll have to write
-something to make the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">csrf_token</span> <span class="pre">%}</span></tt> tag work with our Jinja templates,
-but the rest will be the same.  It will probably look like
-<tt class="docutils literal"><span class="pre">{%</span> <span class="pre">csrf_token()</span> <span class="pre">%}</span></tt>.</p>
+<p>In Django 1.2, <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/">csrf</a>
+was improved by embedding <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">csrf_token</span> <span class="pre">%}</span></tt> inside forms instead of using
+middleware to rewrite HTML strings.  But since we&#8217;re using Jinja for templating,
+that doesn&#8217;t work.</p>
+<p>Instead, use</p>
+<div class="highlight-python"><pre>{{ csrf() }}</pre>
 </div>
-<div class="section" id="id1">
-<h2>Testing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>inside templates to embed the CSRF token Django expects.  See
+<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/apps/admin/templates/admin/flagged_addon_list.html">apps/admin/templates/admin/flagged_addon_list.html</a> for an example.</p>
+</div>
+<div class="section" id="id2">
+<h2>Testing<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Print it out and read it before you go to bed:
 <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/">http://docs.djangoproject.com/en/dev/topics/testing/</a></p>
 <p>Don&#8217;t bother with the doctests stuff, we won&#8217;t use those.  We&#8217;ll write lots of
 unit tests and make heavy use of the <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/#module-django.test.client"><tt class="xref docutils literal"><span class="pre">test</span> <span class="pre">client</span></tt></a>.</p>
-<p>We&#8217;re going to use
-<cite>nose &lt;http://somethingaboutorange.com/mrl/projects/nose/0.11.1/&gt;</cite> for test
-discovery and running.  It provides a lot of options like running only the
-failing tests and outputting XUnit-style XML (which is cool if you want to
-Hudson to understand your test results).  Here&#8217;s a nice app to integrate
-nose with Django: <a class="reference external" href="http://github.com/jbalogh/django-nose">http://github.com/jbalogh/django-nose</a>.</p>
+<p>See more in <a class="reference external" href="../testing/#testing"><em>Testing</em></a>.</p>
 </div>
 <div class="section" id="best-practices">
 <h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
@@ -145,6 +105,13 @@ it to <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> 
 extensions.</p>
 <p>You can find lots of goodies on <a class="reference external" href="http://www.b-list.org/weblog/categories/django/">http://www.b-list.org/weblog/categories/django/</a>.</p>
 </div>
+<div class="section" id="migrations">
+<h2>Migrations<a class="headerlink" href="#migrations" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re going to use <a class="reference external" href="http://south.aeracode.org/">South</a>.  Here&#8217;s the
+<a class="reference external" href="http://south.aeracode.org/wiki/QuickStartGuide">Quick Start Guide</a>, the
+<a class="reference external" href="http://south.aeracode.org/wiki/Tutorial1">tutorial</a>, and the rest of the
+<a class="reference external" href="http://south.aeracode.org/wiki/Documentation">South docs</a>.</p>
+</div>
 </div>
 
 
@@ -156,22 +123,20 @@ extensions.</p>
             <h3><a href="../../">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Django, the Good Parts</a><ul>
-<li><a class="reference external" href="#multiple-databases">Multiple Databases</a></li>
-<li><a class="reference external" href="#working-off-trunk">Working off Trunk</a></li>
-<li><a class="reference external" href="#migrations">Migrations</a></li>
 <li><a class="reference external" href="#csrf">CSRF</a></li>
-<li><a class="reference external" href="#id1">Testing</a></li>
+<li><a class="reference external" href="#id2">Testing</a></li>
 <li><a class="reference external" href="#best-practices">Best Practices</a></li>
+<li><a class="reference external" href="#migrations">Migrations</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../caching/"
-                                  title="previous chapter">Cache is King</a></p>
+            <p class="topless"><a href="../acl/"
+                                  title="previous chapter">Access Control Lists</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="../logging/"
-                                  title="next chapter">Logging</a></p>
+            <p class="topless"><a href="../installation/"
+                                  title="next chapter">Installing Zamboni</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../../_sources/topics/django.txt"
@@ -204,10 +169,10 @@ extensions.</p>
           <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../logging/" title="Logging"
+          <a href="../installation/" title="Installing Zamboni"
              >next</a> |</li>
         <li class="right" >
-          <a href="../caching/" title="Cache is King"
+          <a href="../acl/" title="Access Control Lists"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
