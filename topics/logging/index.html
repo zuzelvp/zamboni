@@ -75,6 +75,11 @@ settings file and pick a different level:</p>
 <dd>This string controls what gets printed out for each log message.  See the
 default in <tt class="docutils literal"><span class="pre">log_settings.py</span></tt>.  The complete list of formatting options is
 available at <a class="reference external" href="http://docs.python.org/library/logging.html#formatter">http://docs.python.org/library/logging.html#formatter</a>.</dd>
+<dt><tt class="docutils literal"><span class="pre">SYSLOG_FORMAT</span></tt></dt>
+<dd>This setting is the same as <tt class="docutils literal"><span class="pre">LOG_FORMAT</span></tt> except it controls the format for
+what is sent to syslog.  By default, it&#8217;s the same as <tt class="docutils literal"><span class="pre">LOG_FORMAT</span></tt> except
+it strips the date/time prefix since syslogd is going to timestamp
+everything anyway.</dd>
 </dl>
 </div>
 <div class="section" id="using-loggers">

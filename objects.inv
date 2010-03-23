@@ -4,9 +4,3 @@
 access mod topics/acl/
 translations.fields mod topics/translations/
 translations.models mod topics/translations/
-translations.fields.TranslatedField class topics/translations/
-translations.models.Translation.new classmethod topics/translations/
-translations.fields.TranslatedFieldMixin class topics/translations/
-translations.fields.TranslatedFieldMixin.fetch_translations method topics/translations/
-translations.models.TranslationSequence class topics/translations/
-translations.models.Translation class topics/translations/

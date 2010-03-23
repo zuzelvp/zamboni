@@ -54,7 +54,15 @@
 Here we go!</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>The only we need to get started is Python 2.6.</p>
+<dl class="docutils">
+<dt>To get started, you&#8217;ll need:</dt>
+<dd><ul class="first last simple">
+<li>Python 2.6</li>
+<li>MySQL (plus mysql development headers for building mysql-python)</li>
+<li>libxml2 (for building lxml, used in tests)</li>
+</ul>
+</dd>
+</dl>
 <div class="section" id="use-the-source">
 <h3>Use the Source<a class="headerlink" href="#use-the-source" title="Permalink to this headline">¶</a></h3>
 <p>Grab zamboni from github with</p>
@@ -155,7 +163,7 @@ settings into <tt class="docutils literal"><span class="pre">settings_local.py</
 </div>
 <p>in your <tt class="docutils literal"><span class="pre">settings_local.py</span></tt> so that all of the configuration is included.
 The settings template for developers, included below, is at
-<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings/settings_local.dev.py">settings/settings_local.dev.py</a>.</p>
+<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/docs/settings/settings_local.dev.py">docs/settings/settings_local.dev.py</a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
 
 
@@ -193,7 +201,7 @@ I recommend you do the same.</p>
 <p>If you have access, I recommend you use <a class="reference external" href="http://gist.github.com/273575">http://gist.github.com/273575</a> to create
 a small database from the production db.  Otherwise, let Django create the
 database schema for you.  Either way, run</p>
-<div class="highlight-python"><pre>django syncdb --noinput</pre>
+<div class="highlight-python"><pre>./manage.py syncdb --noinput</pre>
 </div>
 <p>to get the auth and admin tables from Django.</p>
 <p>At the moment, we&#8217;re tracking Django&#8217;s trunk, and South does not work.  So we&#8217;ll

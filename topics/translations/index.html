@@ -46,10 +46,10 @@
             
   <div class="section" id="translating-fields-on-models">
 <span id="translations"></span><h1>Translating Fields on Models<a class="headerlink" href="#translating-fields-on-models" title="Permalink to this headline">¶</a></h1>
-<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <a title="translations.models.Translation" class="reference internal" href="#translations.models.Translation"><tt class="xref docutils literal"><span class="pre">Translation</span></tt></a>
+<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <tt class="xref docutils literal"><span class="pre">Translation</span></tt>
 model, but for the most part, you shouldn&#8217;t have to use that directly.  When you
 want to create a foreign key to the <tt class="docutils literal"><span class="pre">translations</span></tt> table, use
-<a title="translations.fields.TranslatedField" class="reference internal" href="#translations.fields.TranslatedField"><tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt></a>.  This subclasses Django&#8217;s
+<tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt>.  This subclasses Django&#8217;s
 <a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">django.db.models.ForeignKey</span></tt></a> to make it work with our special handling
 of translation rows.</p>
 <p>A minimal Addon model looks like this:</p>
@@ -62,67 +62,23 @@ of translation rows.</p>
 </pre></div>
 </div>
 <p><tt class="xref docutils literal"><span class="pre">amo.models.ModelBase</span></tt> inherits from
-<a title="translations.fields.TranslatedFieldMixin" class="reference internal" href="#translations.fields.TranslatedFieldMixin"><tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedFieldMixin</span></tt></a>, which fetches all of a
+<tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedFieldMixin</span></tt>, which fetches all of a
 model&#8217;s translations during initialization.  It first tries to fetch strings for
 the current locale, and then looks for any missing strings in the default
 locale.  If you want to change this behavior, it should be enough to override
-<a title="translations.fields.TranslatedFieldMixin.fetch_translations" class="reference internal" href="#translations.fields.TranslatedFieldMixin.fetch_translations"><tt class="xref docutils literal"><span class="pre">fetch_translations()</span></tt></a>.</p>
+<tt class="xref docutils literal"><span class="pre">fetch_translations()</span></tt>.</p>
 <div class="section" id="creating-new-translations">
 <h2>Creating New Translations<a class="headerlink" href="#creating-new-translations" title="Permalink to this headline">¶</a></h2>
 <p>If you need to create new
-<a title="translations.models.Translation" class="reference internal" href="#translations.models.Translation"><tt class="xref docutils literal"><span class="pre">Translations</span></tt></a> without the automagic
-helpers behind <a title="translations.fields.TranslatedField" class="reference internal" href="#translations.fields.TranslatedField"><tt class="xref docutils literal"><span class="pre">TranslatedField</span></tt></a>, use
-<a title="translations.models.Translation.new" class="reference internal" href="#translations.models.Translation.new"><tt class="xref docutils literal"><span class="pre">Translation.new</span></tt></a>.</p>
-<dl class="classmethod">
-<dt id="translations.models.Translation.new">
-<em class="property">classmethod </em><tt class="descclassname">Translation.</tt><tt class="descname">new</tt><big>(</big><em>string</em>, <em>locale</em>, <em>id=None</em><big>)</big><a class="headerlink" href="#translations.models.Translation.new" title="Permalink to this definition">¶</a></dt>
-<dd><p>Jumps through all the right hoops to create a new translation.</p>
-<p>If <tt class="docutils literal"><span class="pre">id</span></tt> is not given a new id will be created using
-<tt class="docutils literal"><span class="pre">translations_seq</span></tt>.  Otherwise, the id will be used to add strings to
-an existing translation.</p>
-</dd></dl>
-
+<tt class="xref docutils literal"><span class="pre">Translations</span></tt> without the automagic
+helpers behind <tt class="xref docutils literal"><span class="pre">TranslatedField</span></tt>, use
+<tt class="xref docutils literal"><span class="pre">Translation.new</span></tt>.</p>
 </div>
 <div class="section" id="module-translations.fields">
 <h2><tt class="docutils literal"><span class="pre">translations.fields</span></tt><a class="headerlink" href="#module-translations.fields" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="translations.fields.TranslatedField">
-<em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedField</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedField" title="Permalink to this definition">¶</a></dt>
-<dd>A foreign key to the translations table.</dd></dl>
-
-<dl class="class">
-<dt id="translations.fields.TranslatedFieldMixin">
-<em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedFieldMixin</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mixin that fetches all <tt class="docutils literal"><span class="pre">TranslatedFields</span></tt> after instantiation.</p>
-<dl class="method">
-<dt id="translations.fields.TranslatedFieldMixin.fetch_translations">
-<tt class="descname">fetch_translations</tt><big>(</big><em>ids</em>, <em>lang</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedFieldMixin.fetch_translations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the query for finding Translation objects.</p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">ids</span></tt> is a list of the foreign keys to the object&#8217;s translations</li>
-<li><tt class="docutils literal"><span class="pre">lang</span></tt> is the language of the current request</li>
-</ul>
-<p>Override this to search for translations in an unusual way.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="module-translations.models">
 <h2><tt class="docutils literal"><span class="pre">translations.models</span></tt><a class="headerlink" href="#module-translations.models" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="translations.models.Translation">
-<em class="property">class </em><tt class="descclassname">translations.models.</tt><tt class="descname">Translation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.models.Translation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Translation model.</p>
-<p>Use <a title="translations.fields.TranslatedField" class="reference internal" href="#translations.fields.TranslatedField"><tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt></a> instead of a plain foreign
-key to this model.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="translations.models.TranslationSequence">
-<em class="property">class </em><tt class="descclassname">translations.models.</tt><tt class="descname">TranslationSequence</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.models.TranslationSequence" title="Permalink to this definition">¶</a></dt>
-<dd>The translations_seq table, so syncdb will create it during testing.</dd></dl>
-
 </div>
 </div>
 
