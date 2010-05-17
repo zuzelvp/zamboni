@@ -71,6 +71,15 @@ git submodule update --init</pre>
 </div>
 </div>
 </div>
+<div class="section" id="installing-python-for-osx-users">
+<h2>Installing Python for OSX users<a class="headerlink" href="#installing-python-for-osx-users" title="Permalink to this headline">¶</a></h2>
+<p>The best solution for OSX is <a class="reference external" href="http://github.com/mxcl/homebrew">Homebrew</a>.  Once installed you can install
+software that runs as you, and not have to run any <tt class="docutils literal"><span class="pre">sudo</span></tt> commands.</p>
+<p>The following packages will get you set for python:</p>
+<div class="highlight-python"><pre>brew install python
+brew install libxml2</pre>
+</div>
+</div>
 <div class="section" id="virtualenv">
 <h2>virtualenv<a class="headerlink" href="#virtualenv" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> is a tool to create
@@ -89,7 +98,7 @@ virtual environment.</p>
 complements virtualenv by installing some shell functions that make environment
 management smoother.</p>
 <p>Install it like this:</p>
-<div class="highlight-python"><pre>wget http://bitbucket.org/dhellmann/virtualenvwrapper/raw/tip/virtualenvwrapper_bashrc -O ~/.virtualenvwrapper
+<div class="highlight-python"><pre>wget http://bitbucket.org/dhellmann/virtualenvwrapper/raw/f31869779141/virtualenvwrapper_bashrc -O ~/.virtualenvwrapper
 mkdir ~/.virtualenvs</pre>
 </div>
 <p>Then put these lines in your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt>:</p>
@@ -189,6 +198,9 @@ The settings template for developers, included below, is at
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="n">DEBUG_PROPAGATE_EXCEPTIONS</span> <span class="o">=</span> <span class="n">DEBUG</span>
+
+<span class="c"># If you&#39;re not running on SSL you&#39;ll want this to be False</span>
+<span class="n">SESSION_COOKIE_SECURE</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
 <p>I&#8217;m overriding the database parameters from <tt class="docutils literal"><span class="pre">settings.py</span></tt> and then extending
@@ -236,6 +248,7 @@ have to do database migrations manually.  I hope there aren&#8217;t too many.</p
 <li><a class="reference external" href="#use-the-source">Use the Source</a></li>
 </ul>
 </li>
+<li><a class="reference external" href="#installing-python-for-osx-users">Installing Python for OSX users</a></li>
 <li><a class="reference external" href="#virtualenv">virtualenv</a></li>
 <li><a class="reference external" href="#virtualenvwrapper">virtualenvwrapper</a><ul>
 <li><a class="reference external" href="#virtualenvwrapper-hooks">virtualenvwrapper Hooks</a><ul>

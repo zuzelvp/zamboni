@@ -48,19 +48,14 @@
 <h1>Welcome to zamboni&#8217;s documentation!<a class="headerlink" href="#welcome-to-zamboni-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="tip-of-the-day">
 <h2>Tip of the Day<a class="headerlink" href="#tip-of-the-day" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="gettext-in-javascript">
-<h3>gettext in Javascript<a class="headerlink" href="#gettext-in-javascript" title="Permalink to this headline">¶</a></h3>
-<p>We have gettext in javascript!  Just mark your strings with <tt class="docutils literal"><span class="pre">gettext()</span></tt> or
-<tt class="docutils literal"><span class="pre">ngettext()</span></tt>.  There isn&#8217;t an <tt class="docutils literal"><span class="pre">_</span></tt> alias right now, since underscore.js has
-that.  If we end up with a lot of js translations, we can fix that.  Check it
-out:</p>
-<div class="highlight-python"><pre>cd locale
-./extract-po.py -d javascript
-pybabel init -l en_US -d . -i javascript.pot -D javascript
-perl -pi -e 's/fuzzy//' en_US/LC_MESSAGES/javascript.po
-pybabel compile -d . -D javascript
-open http://0:8000/en-US/jsi18n/</pre>
-</div>
+<div class="section" id="runserver-plus-and-rundevserver">
+<h3>runserver_plus and rundevserver<a class="headerlink" href="#runserver-plus-and-rundevserver" title="Permalink to this headline">¶</a></h3>
+<p>Part of <tt class="docutils literal"><span class="pre">django_extensions</span></tt> is a new <tt class="docutils literal"><span class="pre">manage.py</span></tt> command:
+<tt class="docutils literal"><span class="pre">runserver_plus</span></tt>.</p>
+<p>This hooks in the <tt class="docutils literal"><span class="pre">Werkzeug</span> <span class="pre">debugger</span></tt> when there is a traceback.  This
+debugger is interactive so it makes coding fun.</p>
+<p>Similar to <tt class="docutils literal"><span class="pre">runserver_plus</span></tt> is <tt class="docutils literal"><span class="pre">rundevserver</span></tt> which does all this, and
+outputs all database queries run.</p>
 </div>
 </div>
 <div class="section" id="installation">
@@ -77,12 +72,27 @@ open http://0:8000/en-US/jsi18n/</pre>
 <li class="toctree-l1"><a class="reference external" href="topics/production/">Zamboni in Production</a></li>
 <li class="toctree-l1"><a class="reference external" href="topics/search/">Search (powered by Sphinx, but not the documenter)</a></li>
 <li class="toctree-l1"><a class="reference external" href="topics/sphinx/">Sphinx (but not the Search Engine)</a></li>
+<li class="toctree-l1"><a class="reference external" href="topics/template/">Templating with Jinja2</a></li>
 <li class="toctree-l1"><a class="reference external" href="topics/testing/">Testing</a></li>
 <li class="toctree-l1"><a class="reference external" href="topics/translations/">Translating Fields on Models</a></li>
 </ul>
 </div>
 <div class="section" id="older-tips">
 <h2>Older Tips<a class="headerlink" href="#older-tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gettext-in-javascript">
+<h3>gettext in Javascript<a class="headerlink" href="#gettext-in-javascript" title="Permalink to this headline">¶</a></h3>
+<p>We have gettext in javascript!  Just mark your strings with <tt class="docutils literal"><span class="pre">gettext()</span></tt> or
+<tt class="docutils literal"><span class="pre">ngettext()</span></tt>.  There isn&#8217;t an <tt class="docutils literal"><span class="pre">_</span></tt> alias right now, since underscore.js has
+that.  If we end up with a lot of js translations, we can fix that.  Check it
+out:</p>
+<div class="highlight-python"><pre>cd locale
+./extract-po.py -d javascript
+pybabel init -l en_US -d . -i javascript.pot -D javascript
+perl -pi -e 's/fuzzy//' en_US/LC_MESSAGES/javascript.po
+pybabel compile -d . -D javascript
+open http://0:8000/en-US/jsi18n/</pre>
+</div>
+</div>
 <div class="section" id="git-bisect">
 <h3>Git Bisect<a class="headerlink" href="#git-bisect" title="Permalink to this headline">¶</a></h3>
 <p>Did you break something recently?  Are you wondering which commit started the
@@ -126,7 +136,7 @@ up-to-date.</li>
 <ul class="simple">
 <li><a class="reference external" href="genindex/"><em>Index</em></a></li>
 <li><a class="reference external" href="modindex/"><em>Module Index</em></a></li>
-<li><a class="reference external" href="topics/search/#search"><em>Search (powered by Sphinx, but not the documenter)</em></a></li>
+<li><a class="reference external" href="search/"><em>Search Page</em></a></li>
 </ul>
 </div>
 </div>
@@ -142,7 +152,7 @@ up-to-date.</li>
             <ul>
 <li><a class="reference external" href="">Welcome to zamboni&#8217;s documentation!</a><ul>
 <li><a class="reference external" href="#tip-of-the-day">Tip of the Day</a><ul>
-<li><a class="reference external" href="#gettext-in-javascript">gettext in Javascript</a></li>
+<li><a class="reference external" href="#runserver-plus-and-rundevserver">runserver_plus and rundevserver</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#installation">Installation</a></li>
@@ -150,6 +160,7 @@ up-to-date.</li>
 </ul>
 </li>
 <li><a class="reference external" href="#older-tips">Older Tips</a><ul>
+<li><a class="reference external" href="#gettext-in-javascript">gettext in Javascript</a></li>
 <li><a class="reference external" href="#git-bisect">Git Bisect</a></li>
 <li><a class="reference external" href="#running-tests">Running Tests</a></li>
 <li><a class="reference external" href="#building-docs">Building Docs</a></li>

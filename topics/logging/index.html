@@ -71,6 +71,15 @@ settings file and pick a different level:</p>
 </pre></div>
 </div>
 </dd>
+<dt><tt class="docutils literal"><span class="pre">LOG_FILTERS</span></tt></dt>
+<dd><p class="first">If this optional setting is set to a tuple, only log items matching strings
+in said tuple will be displayed.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">LOG_FILTERS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;z.sphinx.&#39;</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">This will show you messages <strong>only</strong> that start with <tt class="docutils literal"><span class="pre">z.sphinx</span></tt>.</p>
+</dd>
 <dt><tt class="docutils literal"><span class="pre">LOG_FORMAT</span></tt></dt>
 <dd>This string controls what gets printed out for each log message.  See the
 default in <tt class="docutils literal"><span class="pre">log_settings.py</span></tt>.  The complete list of formatting options is
