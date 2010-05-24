@@ -21,7 +21,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
     <link rel="next" title="Search (powered by Sphinx, but not the documenter)" href="../search/" />
-    <link rel="prev" title="Logging" href="../logging/" /> 
+    <link rel="prev" title="Packaging in Zamboni" href="../packages/" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +37,7 @@
           <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../logging/" title="Logging"
+          <a href="../packages/" title="Packaging in Zamboni"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -102,7 +102,7 @@ below,  can be found at <a class="reference external" href="http://github.com/jb
 <span class="n">SLAVE_DATABASES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;slave&#39;</span><span class="p">]</span>
 
 <span class="c"># Use IP:PORT pairs separated by semicolons.</span>
-<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;caching.backends.memcached://localhost:11211;localhost:11212?timeout=500&#39;</span>
+<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;django_pylibmc.memcached://localhost:11211;localhost:11212?timeout=500&#39;</span>
 
 <span class="c"># This is used to hash some things in Django.</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;replace me with something long&#39;</span>
@@ -172,8 +172,8 @@ zamboni virtualenv.</p>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../logging/"
-                                  title="previous chapter">Logging</a></p>
+            <p class="topless"><a href="../packages/"
+                                  title="previous chapter">Packaging in Zamboni</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="../search/"
                                   title="next chapter">Search (powered by Sphinx, but not the documenter)</a></p>
@@ -212,7 +212,7 @@ zamboni virtualenv.</p>
           <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
              >next</a> |</li>
         <li class="right" >
-          <a href="../logging/" title="Logging"
+          <a href="../packages/" title="Packaging in Zamboni"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
       </ul>

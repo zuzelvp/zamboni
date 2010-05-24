@@ -20,7 +20,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="Zamboni in Production" href="../production/" />
+    <link rel="next" title="Packaging in Zamboni" href="../packages/" />
     <link rel="prev" title="Installing Zamboni" href="../installation/" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
           <a href="../../modindex/" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="../production/" title="Zamboni in Production"
+          <a href="../packages/" title="Packaging in Zamboni"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../installation/" title="Installing Zamboni"
@@ -99,9 +99,9 @@ created in a pseudo-namespace structure, so app-level loggers can inherit
 settings from a root logger.  zamboni&#8217;s root namespace is just <tt class="docutils literal"><span class="pre">&quot;z&quot;</span></tt>, in the
 interest of brevity.  In the caching package, we create a logger that inherits
 the configuration by naming it <tt class="docutils literal"><span class="pre">&quot;z.caching&quot;</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">commonware.log</span>
 
-<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;z.caching&#39;</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">commonware</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;z.caching&#39;</span><span class="p">)</span>
 
 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;I&#39;m in the caching package.&quot;</span><span class="p">)</span>
 </pre></div>
@@ -132,8 +132,8 @@ without becoming overwhelmed with logging from all other parts.</p>
             <p class="topless"><a href="../installation/"
                                   title="previous chapter">Installing Zamboni</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="../production/"
-                                  title="next chapter">Zamboni in Production</a></p>
+            <p class="topless"><a href="../packages/"
+                                  title="next chapter">Packaging in Zamboni</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../../_sources/topics/logging.txt"
@@ -166,7 +166,7 @@ without becoming overwhelmed with logging from all other parts.</p>
           <a href="../../modindex/" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../production/" title="Zamboni in Production"
+          <a href="../packages/" title="Packaging in Zamboni"
              >next</a> |</li>
         <li class="right" >
           <a href="../installation/" title="Installing Zamboni"
