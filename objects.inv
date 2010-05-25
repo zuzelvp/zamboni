@@ -1,0 +1,6 @@
+# Sphinx inventory version 1
+# Project: zamboni
+# Version: 0.1
+access mod topics/acl/
+translations.fields mod topics/translations/
+translations.models mod topics/translations/

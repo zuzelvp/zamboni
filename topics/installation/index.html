@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing Zamboni &mdash; zamboni v0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="next" title="Logging" href="../logging/" />
+    <link rel="prev" title="Django, the Good Parts" href="../django/" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../logging/" title="Logging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../django/" title="Django, the Good Parts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-zamboni">
+<span id="installation"></span><h1>Installing Zamboni<a class="headerlink" href="#installing-zamboni" title="Permalink to this headline">¶</a></h1>
+<p>We&#8217;re going to use all the hottest Python tools to set up a nice environment.
+Here we go!</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>To get started, you&#8217;ll need:</dt>
+<dd><ul class="first last simple">
+<li>Python 2.6</li>
+<li>MySQL</li>
+<li>libxml2 (for building lxml, used in tests)</li>
+<li>libmemcached</li>
+</ul>
+</dd>
+</dl>
+<p>If you&#8217;re on a foolish Linux distro that splits all its packages into <tt class="docutils literal"><span class="pre">-dev</span></tt>
+and normal stuff, make sure you&#8217;re getting all those <tt class="docutils literal"><span class="pre">-dev</span></tt> packages too.</p>
+<div class="section" id="use-the-source">
+<h3>Use the Source<a class="headerlink" href="#use-the-source" title="Permalink to this headline">¶</a></h3>
+<p>Grab zamboni from github with</p>
+<div class="highlight-python"><pre>git clone git://github.com/jbalogh/zamboni.git
+git submodule update --init</pre>
+</div>
+</div>
+</div>
+<div class="section" id="installing-python-for-osx-users">
+<h2>Installing Python for OSX users<a class="headerlink" href="#installing-python-for-osx-users" title="Permalink to this headline">¶</a></h2>
+<p>The best solution for OSX is <a class="reference external" href="http://github.com/mxcl/homebrew">Homebrew</a>.  Once installed you can install
+software that runs as you, and not have to run any <tt class="docutils literal"><span class="pre">sudo</span></tt> commands.</p>
+<p>The following packages will get you set for python:</p>
+<div class="highlight-python"><pre>brew install python libxml2 mysql libmemcached</pre>
+</div>
+</div>
+<div class="section" id="virtualenv">
+<h2>virtualenv<a class="headerlink" href="#virtualenv" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> is a tool to create
+isolated Python environments.  We&#8217;re going to be installing a bunch of packages,
+but we don&#8217;t want your system littered with all these things you only need for
+zamboni.  Some other piece of software might want an older version than zamboni
+wants, which can create quite a mess.</p>
+<div class="highlight-python"><pre>easy_install virtualenv</pre>
+</div>
+<p>virtualenv is the only package I install system-wide.  Everything else goes in a
+virtual environment.</p>
+</div>
+<div class="section" id="virtualenvwrapper">
+<h2>virtualenvwrapper<a class="headerlink" href="#virtualenvwrapper" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.doughellmann.com/docs/virtualenvwrapper/">virtualenvwrapper</a>
+complements virtualenv by installing some shell functions that make environment
+management smoother.</p>
+<p>Install it like this:</p>
+<div class="highlight-python"><pre>wget http://bitbucket.org/dhellmann/virtualenvwrapper/raw/f31869779141/virtualenvwrapper_bashrc -O ~/.virtualenvwrapper
+mkdir ~/.virtualenvs</pre>
+</div>
+<p>Then put these lines in your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt>:</p>
+<div class="highlight-python"><pre>export WORKON_HOME=$HOME/.virtualenvs
+source $HOME/.virtualenvwrapper</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">exec</span> <span class="pre">bash</span></tt> and you&#8217;re set.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You should really be using zsh, but you know to <tt class="docutils literal"><span class="pre">s/bash/zsh/g</span></tt> if
+you&#8217;re sailing that ship.</p>
+</div>
+<div class="section" id="virtualenvwrapper-hooks">
+<h3>virtualenvwrapper Hooks<a class="headerlink" href="#virtualenvwrapper-hooks" title="Permalink to this headline">¶</a></h3>
+<p>virtualenvwrapper lets you run hooks when creating, activating, and deleting
+virtual environments.  These hooks can change settings, the shell environment,
+or anything else you want to do from a shell script.  For complete hook
+documentation, see
+<a class="reference external" href="http://www.doughellmann.com/docs/virtualenvwrapper/hooks.html">http://www.doughellmann.com/docs/virtualenvwrapper/hooks.html</a>.</p>
+<p>You can find some lovely hooks to get started at <a class="reference external" href="http://gist.github.com/234301">http://gist.github.com/234301</a>.
+The hook files should go in <tt class="docutils literal"><span class="pre">$WORKON_HOME</span></tt> (<tt class="docutils literal"><span class="pre">$HOME/.virtualenvs</span></tt> from
+above), and <tt class="docutils literal"><span class="pre">premkvirtualenv</span></tt> should be made executable.</p>
+<div class="section" id="premkvirtualenv">
+<h4>premkvirtualenv<a class="headerlink" href="#premkvirtualenv" title="Permalink to this headline">¶</a></h4>
+<p>This hook installs pip and ipython into every virtualenv you create.</p>
+</div>
+<div class="section" id="postactivate">
+<h4>postactivate<a class="headerlink" href="#postactivate" title="Permalink to this headline">¶</a></h4>
+<p>This runs whenever you start a virtual environment.  If you have a virtual
+environment named <tt class="docutils literal"><span class="pre">zamboni</span></tt>, <tt class="docutils literal"><span class="pre">postactivate</span></tt> switches the shell to
+<tt class="docutils literal"><span class="pre">~/dev/zamboni</span></tt> if that directory exists.</p>
+</div>
+</div>
+</div>
+<div class="section" id="getting-packages">
+<h2>Getting Packages<a class="headerlink" href="#getting-packages" title="Permalink to this headline">¶</a></h2>
+<p>Now we&#8217;re ready to go, so create an environment for zamboni:</p>
+<div class="highlight-python"><pre>mkvirtualenv --no-site-packages zamboni</pre>
+</div>
+<p>That creates a clean environment named zamboni and (for convenience) initializes
+the environment.  You can get out of the environment by restarting your shell or
+calling <tt class="docutils literal"><span class="pre">deactivate</span></tt>.</p>
+<p>To get back into the zamboni environment later, type:</p>
+<div class="highlight-python"><pre>workon zamboni</pre>
+</div>
+<p>If you keep your Python binary in a special place (i.e. you don&#8217;t want to use
+the system Python), pass the path to mkvirtualenv with <tt class="docutils literal"><span class="pre">--python</span></tt>:</p>
+<div class="highlight-python"><pre>mkvirtualenv --python=/usr/local/bin/python2.6 --no-site-packages zamboni</pre>
+</div>
+<div class="section" id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;re going to use pip to install Python packages from <a class="reference external" href="http://pypi.python.org/pypi">pypi</a> and github.</p>
+<div class="highlight-python"><pre>easy_install pip</pre>
+</div>
+<p>Since we&#8217;re in our zamboni environment, pip was only installed locally, not
+system-wide.</p>
+<p>zamboni uses a requirements file to tell pip what to install.  Get everything
+you need by running</p>
+<div class="highlight-python"><pre>pip install -r requirements/dev.txt -r requirements/compiled.txt</pre>
+</div>
+<p>from the root of your zamboni checkout.</p>
+</div>
+</div>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>Most of zamboni is configured in <tt class="docutils literal"><span class="pre">settings.py</span></tt>, but it&#8217;s incomplete since we
+don&#8217;t want to put database passwords into version control.  Put any local
+settings into <tt class="docutils literal"><span class="pre">settings_local.py</span></tt>.  Make sure you have</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>in your <tt class="docutils literal"><span class="pre">settings_local.py</span></tt> so that all of the configuration is included.
+The settings template for developers, included below, is at
+<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/docs/settings/settings_local.dev.py">docs/settings/settings_local.dev.py</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;zamboni&#39;</span><span class="p">,</span>
+        <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
+        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;jbalogh&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;xxx&#39;</span><span class="p">,</span>
+        <span class="s">&#39;OPTIONS&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s">&#39;init_command&#39;</span><span class="p">:</span> <span class="s">&#39;SET storage_engine=InnoDB&#39;</span><span class="p">},</span>
+        <span class="s">&#39;TEST_CHARSET&#39;</span><span class="p">:</span> <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+        <span class="s">&#39;TEST_COLLATION&#39;</span><span class="p">:</span> <span class="s">&#39;utf8_general_ci&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c"># For debug toolbar.</span>
+<span class="n">MIDDLEWARE_CLASSES</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&#39;debug_toolbar.middleware.DebugToolbarMiddleware&#39;</span><span class="p">,)</span>
+<span class="n">INTERNAL_IPS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,)</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&#39;debug_toolbar&#39;</span><span class="p">,)</span>
+
+<span class="n">CACHE_BACKEND</span> <span class="o">=</span> <span class="s">&#39;caching.backends.memcached://localhost:11211?timeout=500&#39;</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">DEBUG_PROPAGATE_EXCEPTIONS</span> <span class="o">=</span> <span class="n">DEBUG</span>
+
+<span class="c"># If you&#39;re not running on SSL you&#39;ll want this to be False</span>
+<span class="n">SESSION_COOKIE_SECURE</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>I&#8217;m overriding the database parameters from <tt class="docutils literal"><span class="pre">settings.py</span></tt> and then extending
+<tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> and <tt class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></tt> to include the <a class="reference external" href="http://github.com/robhudson/django-debug-toolbar">Django Debug
+Toolbar</a>.  It&#8217;s awesome, and
+I recommend you do the same.</p>
+</div>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>If you have access, I recommend you use <a class="reference external" href="http://gist.github.com/273575">http://gist.github.com/273575</a> to create
+a small database from the production db.  Otherwise, let Django create the
+database schema for you.  Either way, run</p>
+<div class="highlight-python"><pre>./manage.py syncdb --noinput</pre>
+</div>
+<p>to get the auth and admin tables from Django.</p>
+<p>At the moment, we&#8217;re tracking Django&#8217;s trunk, and South does not work.  So we&#8217;ll
+have to do database migrations manually.  I hope there aren&#8217;t too many.</p>
+<div class="highlight-python"><pre>ALTER TABLE `users`
+    ADD COLUMN `user_id` INTEGER,
+    ADD CONSTRAINT `user_id_refs_id_eb1f4611` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);</pre>
+</div>
+<p>Then pipe this file into your mysql:</p>
+<div class="highlight-python"><pre>cat apps/cake/sql/session.sql | mysql ...</pre>
+</div>
+<p>What a mess!</p>
+</div>
+<div class="section" id="fin">
+<h2>Fin<a class="headerlink" href="#fin" title="Permalink to this headline">¶</a></h2>
+<p>Everything&#8217;s good to go now so start up the development server.</p>
+<div class="highlight-python"><pre>python manage.py runserver 0:8000</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Installing Zamboni</a><ul>
+<li><a class="reference external" href="#requirements">Requirements</a><ul>
+<li><a class="reference external" href="#use-the-source">Use the Source</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#installing-python-for-osx-users">Installing Python for OSX users</a></li>
+<li><a class="reference external" href="#virtualenv">virtualenv</a></li>
+<li><a class="reference external" href="#virtualenvwrapper">virtualenvwrapper</a><ul>
+<li><a class="reference external" href="#virtualenvwrapper-hooks">virtualenvwrapper Hooks</a><ul>
+<li><a class="reference external" href="#premkvirtualenv">premkvirtualenv</a></li>
+<li><a class="reference external" href="#postactivate">postactivate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#getting-packages">Getting Packages</a><ul>
+<li><a class="reference external" href="#pip">pip</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#settings">Settings</a></li>
+<li><a class="reference external" href="#database">Database</a></li>
+<li><a class="reference external" href="#fin">Fin</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../django/"
+                                  title="previous chapter">Django, the Good Parts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../logging/"
+                                  title="next chapter">Logging</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/topics/installation.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search/" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex/" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../logging/" title="Logging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../django/" title="Django, the Good Parts"
+             >previous</a> |</li>
+        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The Zamboni Collective.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>
