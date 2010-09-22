@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,21 +7,22 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Templating with Jinja2 &mdash; zamboni v0.1 documentation</title>
+    <title>Templating with Jinja2 &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_MODINDEX: false,
-        FILE_SUFFIX: '.html',
+        VERSION:     '0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="top" title="zamboni v0.8 documentation" href="../../" />
     <link rel="next" title="Testing" href="../testing/" />
     <link rel="prev" title="Sphinx (but not the Search Engine)" href="../sphinx/" /> 
   </head>
@@ -31,15 +34,15 @@
           <a href="../../genindex/" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -90,40 +93,40 @@ snippet:</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../../">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="">Templating with Jinja2</a><ul>
-<li><a class="reference external" href="#helpers">Helpers</a></li>
-<li><a class="reference external" href="#context-filters">Context Filters</a></li>
-<li><a class="reference external" href="#template-files">Template Files</a></li>
+  <h3><a href="../../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Templating with Jinja2</a><ul>
+<li><a class="reference internal" href="#helpers">Helpers</a></li>
+<li><a class="reference internal" href="#context-filters">Context Filters</a></li>
+<li><a class="reference internal" href="#template-files">Template Files</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="../sphinx/"
-                                  title="previous chapter">Sphinx (but not the Search Engine)</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="../testing/"
-                                  title="next chapter">Testing</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../../_sources/topics/template.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../../search/" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../sphinx/"
+                        title="previous chapter">Sphinx (but not the Search Engine)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../testing/"
+                        title="next chapter">Testing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/topics/template.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search/" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -135,7 +138,7 @@ snippet:</p>
           <a href="../../genindex/" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
+          <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
@@ -143,12 +146,12 @@ snippet:</p>
         <li class="right" >
           <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
              >previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, The Zamboni Collective.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+        &copy; Copyright 2009, The Zamboni Collective.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
     </div>
   </body>
 </html>

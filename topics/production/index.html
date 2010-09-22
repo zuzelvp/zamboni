@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,22 +7,23 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Zamboni in Production &mdash; zamboni v0.1 documentation</title>
+    <title>Zamboni in Production &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_MODINDEX: false,
-        FILE_SUFFIX: '.html',
+        VERSION:     '0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
-    <link rel="next" title="Search (powered by Sphinx, but not the documenter)" href="../search/" />
+    <link rel="top" title="zamboni v0.8 documentation" href="../../" />
+    <link rel="next" title="Search (powered by SphinxSearch)" href="../search/" />
     <link rel="prev" title="Packaging in Zamboni" href="../packages/" /> 
   </head>
   <body>
@@ -31,15 +34,15 @@
           <a href="../../genindex/" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
+          <a href="../search/" title="Search (powered by SphinxSearch)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../packages/" title="Packaging in Zamboni"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -161,40 +164,40 @@ zamboni virtualenv.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../../">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="">Zamboni in Production</a><ul>
-<li><a class="reference external" href="#getting-requirements">Getting Requirements</a></li>
-<li><a class="reference external" href="#configuration">Configuration</a></li>
-<li><a class="reference external" href="#setting-up-mod-wsgi">Setting up mod_wsgi</a></li>
+  <h3><a href="../../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Zamboni in Production</a><ul>
+<li><a class="reference internal" href="#getting-requirements">Getting Requirements</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#setting-up-mod-wsgi">Setting up mod_wsgi</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="../packages/"
-                                  title="previous chapter">Packaging in Zamboni</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="../search/"
-                                  title="next chapter">Search (powered by Sphinx, but not the documenter)</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../../_sources/topics/production.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../../search/" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../packages/"
+                        title="previous chapter">Packaging in Zamboni</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../search/"
+                        title="next chapter">Search (powered by SphinxSearch)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/topics/production.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search/" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -206,20 +209,20 @@ zamboni virtualenv.</p>
           <a href="../../genindex/" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
+          <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by Sphinx, but not the documenter)"
+          <a href="../search/" title="Search (powered by SphinxSearch)"
              >next</a> |</li>
         <li class="right" >
           <a href="../packages/" title="Packaging in Zamboni"
              >previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, The Zamboni Collective.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+        &copy; Copyright 2009, The Zamboni Collective.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
     </div>
   </body>
 </html>

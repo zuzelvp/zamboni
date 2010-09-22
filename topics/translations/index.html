@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,21 +7,22 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Translating Fields on Models &mdash; zamboni v0.1 documentation</title>
+    <title>Translating Fields on Models &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_MODINDEX: false,
-        FILE_SUFFIX: '.html',
+        VERSION:     '0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="zamboni v0.1 documentation" href="../../" />
+    <link rel="top" title="zamboni v0.8 documentation" href="../../" />
     <link rel="prev" title="Testing" href="../testing/" /> 
   </head>
   <body>
@@ -30,12 +33,12 @@
           <a href="../../genindex/" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -46,11 +49,11 @@
             
   <div class="section" id="translating-fields-on-models">
 <span id="translations"></span><h1>Translating Fields on Models<a class="headerlink" href="#translating-fields-on-models" title="Permalink to this headline">¶</a></h1>
-<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <tt class="xref docutils literal"><span class="pre">Translation</span></tt>
+<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <tt class="xref py py-class docutils literal"><span class="pre">Translation</span></tt>
 model, but for the most part, you shouldn&#8217;t have to use that directly.  When you
 want to create a foreign key to the <tt class="docutils literal"><span class="pre">translations</span></tt> table, use
-<tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt>.  This subclasses Django&#8217;s
-<a title="(in Django v1.1)" class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">django.db.models.ForeignKey</span></tt></a> to make it work with our special handling
+<tt class="xref py py-class docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt>.  This subclasses Django&#8217;s
+<a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v1.1)"><tt class="xref py py-class docutils literal"><span class="pre">django.db.models.ForeignKey</span></tt></a> to make it work with our special handling
 of translation rows.</p>
 <p>A minimal Addon model looks like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">amo.models</span>
@@ -61,24 +64,18 @@ of translation rows.</p>
     <span class="n">description</span> <span class="o">=</span> <span class="n">TranslatedField</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><tt class="xref docutils literal"><span class="pre">amo.models.ModelBase</span></tt> inherits from
-<tt class="xref docutils literal"><span class="pre">translations.fields.TranslatedFieldMixin</span></tt>, which fetches all of a
-model&#8217;s translations during initialization.  It first tries to fetch strings for
-the current locale, and then looks for any missing strings in the default
-locale.  If you want to change this behavior, it should be enough to override
-<tt class="xref docutils literal"><span class="pre">fetch_translations()</span></tt>.</p>
 <div class="section" id="creating-new-translations">
 <h2>Creating New Translations<a class="headerlink" href="#creating-new-translations" title="Permalink to this headline">¶</a></h2>
 <p>If you need to create new
-<tt class="xref docutils literal"><span class="pre">Translations</span></tt> without the automagic
-helpers behind <tt class="xref docutils literal"><span class="pre">TranslatedField</span></tt>, use
-<tt class="xref docutils literal"><span class="pre">Translation.new</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">Translations</span></tt> without the automagic
+helpers behind <tt class="xref py py-class docutils literal"><span class="pre">TranslatedField</span></tt>, use
+<tt class="xref py py-meth docutils literal"><span class="pre">Translation.new</span></tt>.</p>
 </div>
 <div class="section" id="module-translations.fields">
-<h2><tt class="docutils literal"><span class="pre">translations.fields</span></tt><a class="headerlink" href="#module-translations.fields" title="Permalink to this headline">¶</a></h2>
+<span id="translations-fields"></span><h2><tt class="docutils literal"><span class="pre">translations.fields</span></tt><a class="headerlink" href="#module-translations.fields" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-translations.models">
-<h2><tt class="docutils literal"><span class="pre">translations.models</span></tt><a class="headerlink" href="#module-translations.models" title="Permalink to this headline">¶</a></h2>
+<span id="translations-models"></span><h2><tt class="docutils literal"><span class="pre">translations.models</span></tt><a class="headerlink" href="#module-translations.models" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -88,37 +85,37 @@ helpers behind <tt class="xref docutils literal"><span class="pre">TranslatedFie
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../../">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="">Translating Fields on Models</a><ul>
-<li><a class="reference external" href="#creating-new-translations">Creating New Translations</a></li>
-<li><a class="reference external" href="#module-translations.fields"><tt class="docutils literal"><span class="pre">translations.fields</span></tt></a></li>
-<li><a class="reference external" href="#module-translations.models"><tt class="docutils literal"><span class="pre">translations.models</span></tt></a></li>
+  <h3><a href="../../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Translating Fields on Models</a><ul>
+<li><a class="reference internal" href="#creating-new-translations">Creating New Translations</a></li>
+<li><a class="reference internal" href="#module-translations.fields"><tt class="docutils literal"><span class="pre">translations.fields</span></tt></a></li>
+<li><a class="reference internal" href="#module-translations.models"><tt class="docutils literal"><span class="pre">translations.models</span></tt></a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="../testing/"
-                                  title="previous chapter">Testing</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../../_sources/topics/translations.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../../search/" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../testing/"
+                        title="previous chapter">Testing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/topics/translations.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search/" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -130,17 +127,17 @@ helpers behind <tt class="xref docutils literal"><span class="pre">TranslatedFie
           <a href="../../genindex/" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
+          <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="../testing/" title="Testing"
              >previous</a> |</li>
-        <li><a href="../../">zamboni v0.1 documentation</a> &raquo;</li> 
+        <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2009, The Zamboni Collective.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+        &copy; Copyright 2009, The Zamboni Collective.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
     </div>
   </body>
 </html>
