@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search (powered by SphinxSearch) &mdash; zamboni v0.8 documentation</title>
+    <title>OAuth &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.8 documentation" href="../../" />
-    <link rel="next" title="Sphinx (but not the Search Engine)" href="../sphinx/" />
-    <link rel="prev" title="Zamboni in Production" href="../production/" /> 
+    <link rel="next" title="Packaging in Zamboni" href="../packages/" />
+    <link rel="prev" title="Logging" href="../logging/" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+          <a href="../packages/" title="Packaging in Zamboni"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../production/" title="Zamboni in Production"
+          <a href="../logging/" title="Logging"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
@@ -51,38 +51,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="search-powered-by-sphinxsearch">
-<span id="sphinx-search"></span><h1>Search (powered by SphinxSearch)<a class="headerlink" href="#search-powered-by-sphinxsearch" title="Permalink to this headline">¶</a></h1>
-<p>Search is powered by <a class="reference external" href="http://sphinxsearch.com">Sphinx</a>.  It allows us to do
-very fast full-text search and avoid hitting the mysql databases or polluting
-them with search-related data.</p>
-<div class="section" id="production">
-<h2>Production<a class="headerlink" href="#production" title="Permalink to this headline">¶</a></h2>
-<p>Production at peak load based on log analysis done in 2009 suggests that we
-serve 10q/s.</p>
-<p>Sphinx is served from two load balanced nodes that also serve sphinx for
-preview and SUMO.</p>
-</div>
-<div class="section" id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>Testing of Sphinx can be remarkably slower since Sphinx needs to populate
-tables and truncate tables for each test.  If you are trying to run a quick
-test you can always omit Sphinx:</p>
-<div class="highlight-python"><pre>./manage.py test -a\!sphinx</pre>
-</div>
-</div>
-<div class="section" id="addon-criteria-for-being-indexed">
-<h2>Addon criteria for being indexed<a class="headerlink" href="#addon-criteria-for-being-indexed" title="Permalink to this headline">¶</a></h2>
-<p>Sphinx tries to index all valid addons.  The query in
-<cite>configs/sphinx/sphinx.conf</cite> looks for addons that meet the following criteria:</p>
-<ul class="simple">
-<li>A name needs to be set for the default locale.  E.g. if your default locale
-is <tt class="docutils literal"><span class="pre">fr</span></tt> there should be a corresponding translation for the name in <tt class="docutils literal"><span class="pre">fr</span></tt>.</li>
-<li>Only (non default) translations of an addon that have either a description or
-summary set will be indexed.  E.g. if your addon has <tt class="docutils literal"><span class="pre">en-US</span></tt> as a default
-locale, the <tt class="docutils literal"><span class="pre">fr</span></tt> locale won&#8217;t be indexed if you haven&#8217;t set a description
-or a summary.</li>
-</ul>
+  <div class="section" id="oauth">
+<h1>OAuth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h1>
+<p>The new API (<tt class="docutils literal"><span class="pre">/api/2/*</span></tt>) is powered by Piston and authentication is provided
+for via OAuth.  OAuth is a means for users to grant permissions to a third
+party application to act on their behalf without supplying a username and
+password.</p>
+<div class="section" id="the-oauth-dance">
+<h2>The OAuth Dance<a class="headerlink" href="#the-oauth-dance" title="Permalink to this headline">¶</a></h2>
+<p>The OAuth &#8220;dance&#8221; involves a number of steps:</p>
+<ol class="arabic simple">
+<li><strong>Requesting an OAuth Request Token.</strong>  The third party app (e.g. Flight
+Deck) requests a <em>Request Token</em> from the website (e.g. AMO).</li>
+<li>The app sends the user with the <em>Request Token</em> to an authorization page.</li>
+<li>The app requests an <em>Access Token</em> with the user-authorized <em>Request Token</em>.</li>
+</ol>
+<p>Each of these reuqests must contain various OAuth headers, request parameters
+and be signed in a specific manner.</p>
+<p>This is detailed in our api tests in <tt class="docutils literal"><span class="pre">_oauth_flow</span></tt>.</p>
 </div>
 </div>
 
@@ -94,23 +80,21 @@ or a summary.</li>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Search (powered by SphinxSearch)</a><ul>
-<li><a class="reference internal" href="#production">Production</a></li>
-<li><a class="reference internal" href="#testing">Testing</a></li>
-<li><a class="reference internal" href="#addon-criteria-for-being-indexed">Addon criteria for being indexed</a></li>
+<li><a class="reference internal" href="#">OAuth</a><ul>
+<li><a class="reference internal" href="#the-oauth-dance">The OAuth Dance</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../production/"
-                        title="previous chapter">Zamboni in Production</a></p>
+  <p class="topless"><a href="../logging/"
+                        title="previous chapter">Logging</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../sphinx/"
-                        title="next chapter">Sphinx (but not the Search Engine)</a></p>
+  <p class="topless"><a href="../packages/"
+                        title="next chapter">Packaging in Zamboni</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/topics/search.txt"
+    <li><a href="../../_sources/topics/oauth.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -140,10 +124,10 @@ or a summary.</li>
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../sphinx/" title="Sphinx (but not the Search Engine)"
+          <a href="../packages/" title="Packaging in Zamboni"
              >next</a> |</li>
         <li class="right" >
-          <a href="../production/" title="Zamboni in Production"
+          <a href="../logging/" title="Logging"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
