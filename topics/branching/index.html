@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Sphinx (but not the Search Engine) &mdash; zamboni v0.8 documentation</title>
+    <title>How We Do Branching &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.8 documentation" href="../../" />
-    <link rel="next" title="Templating with Jinja2" href="../template/" />
-    <link rel="prev" title="Search (powered by SphinxSearch)" href="../search/" /> 
+    <link rel="next" title="Celery" href="../celery/" />
+    <link rel="prev" title="Getting Fancy" href="../advanced-installation/" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../template/" title="Templating with Jinja2"
+          <a href="../celery/" title="Celery"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by SphinxSearch)"
+          <a href="../advanced-installation/" title="Getting Fancy"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
@@ -51,57 +51,28 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="sphinx-but-not-the-search-engine">
-<span id="sphinx"></span><h1>Sphinx (but not the Search Engine)<a class="headerlink" href="#sphinx-but-not-the-search-engine" title="Permalink to this headline">¶</a></h1>
-<p>For a reStructuredText Primer, see <a class="reference external" href="http://sphinx.pocoo.org/rest.html">http://sphinx.pocoo.org/rest.html</a>.</p>
-<div class="section" id="sections">
-<h2>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h2>
-<p>Sphinx doesn&#8217;t care what punctuation you use for marking headings, but each new
-kind that it sees means one level lower in the outline.  So,</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------</pre>
-</div>
-<p>will correspond to</p>
-<div class="highlight-python"><pre>&lt;h1&gt;Heading 1&lt;/h1&gt;
-&lt;h2&gt;Heading 2&lt;/h2&gt;</pre>
-</div>
-<p>For consistency, this is what I&#8217;m using for headings in Zamboni:</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------
-
-Heading 3
-~~~~~~~~~
-
-Heading 4
-*********
-
-Heading 5
-+++++++++
-
-Heading 6
-^^^^^^^^^</pre>
-</div>
-<p>Use two newlines prior to a new heading.  I&#8217;m only using one here for space
-efficiency.</p>
-</div>
-<div class="section" id="sphinx-extras">
-<h2>Sphinx Extras<a class="headerlink" href="#sphinx-extras" title="Permalink to this headline">¶</a></h2>
-<p>Use <tt class="docutils literal"><span class="pre">:src:`path/to/file.py`</span></tt> to link to source files online.  Example:
-<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings.py">settings.py</a>.</p>
-</div>
-<div class="section" id="vim">
-<h2>Vim<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h2>
-<p>Here&#8217;s a nice macro for creating headings:</p>
-<div class="highlight-python"><pre>let @h = "yypVr"</pre>
-</div>
+  <div class="section" id="how-we-do-branching">
+<span id="branching"></span><h1>How We Do Branching<a class="headerlink" href="#how-we-do-branching" title="Permalink to this headline">¶</a></h1>
+<p>We manage our branches in a similar manner to <a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">nvie&#8217;s branching model</a>.  The
+main difference is that we develop all code on the <a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master">master</a> branch and use the
+<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/next">next</a> branch as the place for staging releases.</p>
+<p>New development happens on <tt class="docutils literal"><span class="pre">master</span></tt>, and is visible on
+<a class="reference external" href="https://preview.addons.mozilla.org">https://preview.addons.mozilla.org</a>.  When we have a code freeze (every one or
+two weeks), the <tt class="docutils literal"><span class="pre">next</span></tt> branch is synced with master and is visible on
+<a class="reference external" href="https://next.addons.mozilla.org">https://next.addons.mozilla.org</a>.</p>
+<p>Tags should be created off of the <tt class="docutils literal"><span class="pre">next</span></tt> branch.  If we need to release a
+hotfix, it should be applied to the <tt class="docutils literal"><span class="pre">next</span></tt> branch and tagged from there.</p>
+<div class="section" id="local-branches">
+<h2>Local Branches<a class="headerlink" href="#local-branches" title="Permalink to this headline">¶</a></h2>
+<p>Most new code is developed in local one-off branches, usually encompassing one
+or two patches to fix a bug.  Upstream doesn&#8217;t care how you do local
+development, but we don&#8217;t want to see a merge commit every time you merge a
+single patch from a branch.  Merge commits make for a noisy history, which is
+not fun to look at and can make it difficult to cherry-pick hotfixes to a
+release branch.  We do like to see merge commits when you&#8217;re committing a set
+of related patches from a feature branch.  The rule of thumb is to rebase and
+use fast-forward merge for single patches or a branch of unrelated bug fixes,
+but to use a merge commit if you have multiple commits that form a cohesive unit.</p>
 </div>
 </div>
 
@@ -113,23 +84,21 @@ efficiency.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Sphinx (but not the Search Engine)</a><ul>
-<li><a class="reference internal" href="#sections">Sections</a></li>
-<li><a class="reference internal" href="#sphinx-extras">Sphinx Extras</a></li>
-<li><a class="reference internal" href="#vim">Vim</a></li>
+<li><a class="reference internal" href="#">How We Do Branching</a><ul>
+<li><a class="reference internal" href="#local-branches">Local Branches</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../search/"
-                        title="previous chapter">Search (powered by SphinxSearch)</a></p>
+  <p class="topless"><a href="../advanced-installation/"
+                        title="previous chapter">Getting Fancy</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../template/"
-                        title="next chapter">Templating with Jinja2</a></p>
+  <p class="topless"><a href="../celery/"
+                        title="next chapter">Celery</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/topics/sphinx.txt"
+    <li><a href="../../_sources/topics/branching.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -159,10 +128,10 @@ efficiency.</p>
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../template/" title="Templating with Jinja2"
+          <a href="../celery/" title="Celery"
              >next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by SphinxSearch)"
+          <a href="../advanced-installation/" title="Getting Fancy"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>

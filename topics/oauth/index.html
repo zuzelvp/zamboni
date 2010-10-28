@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Sphinx (but not the Search Engine) &mdash; zamboni v0.8 documentation</title>
+    <title>OAuth &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.8 documentation" href="../../" />
-    <link rel="next" title="Templating with Jinja2" href="../template/" />
-    <link rel="prev" title="Search (powered by SphinxSearch)" href="../search/" /> 
+    <link rel="next" title="Packaging in Zamboni" href="../packages/" />
+    <link rel="prev" title="Logging" href="../logging/" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../template/" title="Templating with Jinja2"
+          <a href="../packages/" title="Packaging in Zamboni"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by SphinxSearch)"
+          <a href="../logging/" title="Logging"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
@@ -51,57 +51,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="sphinx-but-not-the-search-engine">
-<span id="sphinx"></span><h1>Sphinx (but not the Search Engine)<a class="headerlink" href="#sphinx-but-not-the-search-engine" title="Permalink to this headline">¶</a></h1>
-<p>For a reStructuredText Primer, see <a class="reference external" href="http://sphinx.pocoo.org/rest.html">http://sphinx.pocoo.org/rest.html</a>.</p>
-<div class="section" id="sections">
-<h2>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h2>
-<p>Sphinx doesn&#8217;t care what punctuation you use for marking headings, but each new
-kind that it sees means one level lower in the outline.  So,</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------</pre>
-</div>
-<p>will correspond to</p>
-<div class="highlight-python"><pre>&lt;h1&gt;Heading 1&lt;/h1&gt;
-&lt;h2&gt;Heading 2&lt;/h2&gt;</pre>
-</div>
-<p>For consistency, this is what I&#8217;m using for headings in Zamboni:</p>
-<div class="highlight-python"><pre>=========
-Heading 1
-=========
-
-Heading 2
----------
-
-Heading 3
-~~~~~~~~~
-
-Heading 4
-*********
-
-Heading 5
-+++++++++
-
-Heading 6
-^^^^^^^^^</pre>
-</div>
-<p>Use two newlines prior to a new heading.  I&#8217;m only using one here for space
-efficiency.</p>
-</div>
-<div class="section" id="sphinx-extras">
-<h2>Sphinx Extras<a class="headerlink" href="#sphinx-extras" title="Permalink to this headline">¶</a></h2>
-<p>Use <tt class="docutils literal"><span class="pre">:src:`path/to/file.py`</span></tt> to link to source files online.  Example:
-<a class="reference external" href="http://github.com/jbalogh/zamboni/tree/master/settings.py">settings.py</a>.</p>
-</div>
-<div class="section" id="vim">
-<h2>Vim<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h2>
-<p>Here&#8217;s a nice macro for creating headings:</p>
-<div class="highlight-python"><pre>let @h = "yypVr"</pre>
-</div>
+  <div class="section" id="oauth">
+<h1>OAuth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h1>
+<p>The new API (<tt class="docutils literal"><span class="pre">/api/2/*</span></tt>) is powered by Piston and authentication is provided
+for via OAuth.  OAuth is a means for users to grant permissions to a third
+party application to act on their behalf without supplying a username and
+password.</p>
+<div class="section" id="the-oauth-dance">
+<h2>The OAuth Dance<a class="headerlink" href="#the-oauth-dance" title="Permalink to this headline">¶</a></h2>
+<p>The OAuth &#8220;dance&#8221; involves a number of steps:</p>
+<ol class="arabic simple">
+<li><strong>Requesting an OAuth Request Token.</strong>  The third party app (e.g. Flight
+Deck) requests a <em>Request Token</em> from the website (e.g. AMO).</li>
+<li>The app sends the user with the <em>Request Token</em> to an authorization page.</li>
+<li>The app requests an <em>Access Token</em> with the user-authorized <em>Request Token</em>.</li>
+</ol>
+<p>Each of these reuqests must contain various OAuth headers, request parameters
+and be signed in a specific manner.</p>
+<p>This is detailed in our api tests in <tt class="docutils literal"><span class="pre">_oauth_flow</span></tt>.</p>
 </div>
 </div>
 
@@ -113,23 +80,21 @@ efficiency.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Sphinx (but not the Search Engine)</a><ul>
-<li><a class="reference internal" href="#sections">Sections</a></li>
-<li><a class="reference internal" href="#sphinx-extras">Sphinx Extras</a></li>
-<li><a class="reference internal" href="#vim">Vim</a></li>
+<li><a class="reference internal" href="#">OAuth</a><ul>
+<li><a class="reference internal" href="#the-oauth-dance">The OAuth Dance</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../search/"
-                        title="previous chapter">Search (powered by SphinxSearch)</a></p>
+  <p class="topless"><a href="../logging/"
+                        title="previous chapter">Logging</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../template/"
-                        title="next chapter">Templating with Jinja2</a></p>
+  <p class="topless"><a href="../packages/"
+                        title="next chapter">Packaging in Zamboni</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/topics/sphinx.txt"
+    <li><a href="../../_sources/topics/oauth.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -159,10 +124,10 @@ efficiency.</p>
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../template/" title="Templating with Jinja2"
+          <a href="../packages/" title="Packaging in Zamboni"
              >next</a> |</li>
         <li class="right" >
-          <a href="../search/" title="Search (powered by SphinxSearch)"
+          <a href="../logging/" title="Logging"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
