@@ -1,5 +1,6 @@
 from nose.tools import eq_
 import test_utils
+import superrad
 
 from redisutils import mock_redis, reset_redis
 
@@ -10,7 +11,7 @@ from addons.utils import ReverseNameLookup
 from files.models import File
 
 
-class TestBuildReverseNameLookup(test_utils.TestCase):
+class TestBuildReverseNameLookup(superrad.TestCase):
     fixtures = ('base/addon_3615',)
 
     def setUp(self):
@@ -24,7 +25,7 @@ class TestBuildReverseNameLookup(test_utils.TestCase):
         eq_(ReverseNameLookup.get('Delicious Bookmarks'), 3615)
 
 
-class CurrentVersionTestCase(test_utils.TestCase):
+class CurrentVersionTestCase(superrad.TestCase):
     fixtures = ['base/addon_3615']
 
     def test_addons(self):
@@ -40,7 +41,7 @@ class CurrentVersionTestCase(test_utils.TestCase):
         eq_(Addon.objects.filter(_current_version=None, pk=3615).count(), 0)
 
 
-class TestLastUpdated(test_utils.TestCase):
+class TestLastUpdated(superrad.TestCase):
     fixtures = ['base/addon_3615', 'addons/listed']
 
     def test_personas(self):
@@ -73,15 +74,15 @@ class TestLastUpdated(test_utils.TestCase):
         for addon in Addon.objects.filter(status=amo.STATUS_PUBLIC):
             eq_(addon.last_updated, addon.created)
 
-    def test_appsupport(self):
+    def test_appsupport_deletes(self):
         ids = Addon.objects.values_list('id', flat=True)
         cron._update_appsupport(ids)
 
-        eq_(AppSupport.objects.count(), 2)
+        old_count = AppSupport.objects.count()
 
-        # Run it again to test deletes.
+        # Run it again to test deletes (no dupes).
         cron._update_appsupport(ids)
-        eq_(AppSupport.objects.count(), 2)
+        eq_(AppSupport.objects.count(), old_count)
 
     def test_appsupport_listed(self):
         AppSupport.objects.all().delete()

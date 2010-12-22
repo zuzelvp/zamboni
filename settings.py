@@ -605,6 +605,7 @@ LOGGING = {
         'caching': {'handlers': ['null']},
         'rdflib': {'handlers': ['null']},
         'suds': {'handlers': ['null']},
+        'nose.plugins.manager': {'handlers': ['null']},
         'z.sphinx': {'level': logging.INFO},
         'z.task': {'level': logging.INFO},
     },

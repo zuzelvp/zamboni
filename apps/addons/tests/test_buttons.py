@@ -4,7 +4,7 @@ import jingo
 from mock import patch, Mock, sentinel
 from nose.tools import eq_
 from pyquery import PyQuery
-import test_utils
+import superrad
 
 import amo
 import amo.models
@@ -16,7 +16,7 @@ def setup():
     jingo.load_helpers()
 
 
-class ButtonTest(test_utils.TestCase):
+class ButtonTest(superrad.TestCase):
 
     def setUp(self):
         self.addon = Mock()
@@ -537,7 +537,7 @@ class TestButtonHtml(ButtonTest):
         assert xss not in s, s
 
 
-class TestViews(test_utils.TestCase):
+class TestViews(superrad.TestCase):
     fixtures = ['addons/eula+contrib-addon', 'base/apps']
 
     def test_eula_with_contrib_roadblock(self):

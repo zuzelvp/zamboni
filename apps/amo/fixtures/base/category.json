@@ -34,15 +34,6 @@
     },
     {
         "pk": 1,
-        "model": "applications.application",
-        "fields": {
-            "guid": "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}",
-            "modified": "2008-11-03 15:34:59",
-            "created": "2007-03-05 13:09:26"
-        }
-    },
-    {
-        "pk": 1,
         "model": "addons.addontype",
         "fields": {
             "description": 39111,
@@ -75,7 +66,7 @@
         }
     },
     {
-        "pk": 1,
+        "pk": 233,
         "model": "addons.category",
         "fields": {
             "count": 811,
@@ -90,17 +81,40 @@
         }
     },
     {
+        "pk": 8383,
+        "model": "translations.translation",
+        "fields": {
+            "locale": "en-US",
+            "created": "2007-03-05 13:09:26",
+            "id": 8383,
+            "modified": "2007-10-12 16:58:05",
+            "localized_string": "Alerts & Updates"
+        }
+    },
+    {
         "fields": {
             "count": 737,
             "weight": 0,
             "created": "2007-03-05 16:06:55",
             "modified": "2009-11-13 02:15:58",
             "application": 1,
+            "name": 8383,
             "type": 1,
             "slug": "alerts-updates"
         },
         "model": "addons.category",
         "pk": 72
+    },
+    {
+        "pk": 9292,
+        "model": "translations.translation",
+        "fields": {
+            "locale": "en-US",
+            "created": "2007-03-05 13:09:26",
+            "id": 9292,
+            "modified": "2007-10-12 16:58:05",
+            "localized_string": "Search Tools"
+        }
     },
     {
         "pk": 13,
@@ -114,7 +128,7 @@
             "application": 1,
             "type": 1,
             "slug": "search-tools",
-            "name": null
+            "name": 9292
         }
     }
 ]

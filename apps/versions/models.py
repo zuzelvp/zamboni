@@ -232,7 +232,6 @@ class VersionSummary(amo.models.ModelBase):
 
 
 class ApplicationsVersions(caching.base.CachingMixin, models.Model):
-
     application = models.ForeignKey(Application)
     version = models.ForeignKey(Version, related_name='apps')
     min = models.ForeignKey(AppVersion, db_column='min',

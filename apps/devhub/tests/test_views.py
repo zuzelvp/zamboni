@@ -13,12 +13,12 @@ from django.conf import settings
 from django.utils import translation
 
 import mock
+import superrad
 from nose.tools import eq_, assert_not_equal, assert_raises
 from nose.plugins.attrib import attr
 from PIL import Image
 from pyquery import PyQuery as pq
 from redisutils import mock_redis, reset_redis
-import test_utils
 
 import amo
 import files.tests
@@ -59,7 +59,7 @@ def assert_no_validation_errors(validation):
                              error.rstrip().split("\n")[-1])
 
 
-class HubTest(test_utils.TestCase):
+class HubTest(superrad.TestCase):
     fixtures = ['browse/nameless-addon', 'base/users']
 
     def setUp(self):
@@ -216,7 +216,7 @@ class TestDashboard(HubTest):
         assert doc('.item[data-addonid=%s] > p' % a_pk)
 
 
-class TestUpdateCompatibility(test_utils.TestCase):
+class TestUpdateCompatibility(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_4594_a9',
                 'base/addon_3615']
 
@@ -285,7 +285,7 @@ def formset(*args, **kw):
     return data
 
 
-class TestDevRequired(test_utils.TestCase):
+class TestDevRequired(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -331,7 +331,7 @@ class TestDevRequired(test_utils.TestCase):
         self.assertRedirects(self.client.post(self.post_url), self.get_url)
 
 
-class TestOwnership(test_utils.TestCase):
+class TestOwnership(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -619,7 +619,7 @@ class TestEditAuthor(TestOwnership):
             ['Must have at least one owner.'])
 
 
-class TestVersionStats(test_utils.TestCase):
+class TestVersionStats(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -642,7 +642,7 @@ class TestVersionStats(test_utils.TestCase):
         self.assertDictEqual(r, exp)
 
 
-class TestEditPayments(test_utils.TestCase):
+class TestEditPayments(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -818,7 +818,7 @@ class TestEditPayments(test_utils.TestCase):
         assert 'no-edit' in self.client.get(self.url).content
 
 
-class TestDisablePayments(test_utils.TestCase):
+class TestDisablePayments(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -847,7 +847,7 @@ class TestDisablePayments(test_utils.TestCase):
         eq_(Addon.uncached.get(id=3615).wants_contributions, False)
 
 
-class TestPaymentsProfile(test_utils.TestCase):
+class TestPaymentsProfile(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -930,7 +930,7 @@ class TestPaymentsProfile(test_utils.TestCase):
         eq_(self.get_addon().wants_contributions, False)
 
 
-class TestDelete(test_utils.TestCase):
+class TestDelete(superrad.TestCase):
     fixtures = ('base/apps', 'base/users', 'base/addon_3615',
                 'base/addon_5579',)
 
@@ -953,7 +953,7 @@ class TestDelete(test_utils.TestCase):
         self.assertRaises(Addon.DoesNotExist, self.get_addon)
 
 
-class TestEdit(test_utils.TestCase):
+class TestEdit(superrad.TestCase):
     fixtures = ('base/apps', 'base/users', 'base/addon_3615',
                 'base/addon_5579', 'base/addon_3615_categories')
 
@@ -1730,7 +1730,7 @@ class TestEdit(test_utils.TestCase):
             eq_(pq(r.content)('#l10n-menu').attr('data-default'), 'fr')
 
 
-class TestActivityFeed(test_utils.TestCase):
+class TestActivityFeed(superrad.TestCase):
     fixtures = ('base/apps', 'base/users', 'base/addon_3615')
 
     def setUp(self):
@@ -1757,7 +1757,7 @@ class TestActivityFeed(test_utils.TestCase):
             addon.slug)
 
 
-class TestProfileBase(test_utils.TestCase):
+class TestProfileBase(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -1920,9 +1920,8 @@ def initial(form):
     return data
 
 
-class TestVersion(test_utils.TestCase):
-    fixtures = ['base/users',
-                'base/addon_3615']
+class TestVersion(superrad.TestCase):
+    fixtures = ['base/users', 'base/addon_3615']
 
     def setUp(self):
         assert self.client.login(username='del@icio.us', password='password')
@@ -2156,7 +2155,7 @@ class TestVersion(test_utils.TestCase):
             set(['checkbox']))
 
 
-class TestVersionEdit(test_utils.TestCase):
+class TestVersionEdit(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615',
                 'base/thunderbird', 'base/platforms']
 
@@ -2235,7 +2234,7 @@ class TestVersionEditDetails(TestVersionEdit):
         assert doc('p.add-app')[0].attrib['class'] == 'add-app'
 
     def test_add_not(self):
-        Application(id=52).save()
+        # Apps are hidden since the version is already linked to the app.
         for id in [18, 52, 59, 60]:
             av = AppVersion(application_id=id, version='1')
             av.save()
@@ -2513,7 +2512,7 @@ class TestVersionEditCompat(TestVersionEdit):
         eq_(av.min, av.max)
 
 
-class TestSubmitBase(test_utils.TestCase):
+class TestSubmitBase(superrad.TestCase):
     fixtures = ['base/addon_3615', 'base/addon_5579', 'base/users']
 
     def setUp(self):
@@ -2542,7 +2541,7 @@ class TestSubmitStep1(TestSubmitBase):
                                                                      ln.text))
 
 
-class TestSubmitStep2(test_utils.TestCase):
+class TestSubmitStep2(superrad.TestCase):
     # More tests in TestCreateAddon.
     fixtures = ['base/users']
 
@@ -2561,7 +2560,7 @@ class TestSubmitStep2(test_utils.TestCase):
         self.assertRedirects(r, reverse('devhub.submit.1'))
 
 
-class TestSubmitStep3(test_utils.TestCase):
+class TestSubmitStep3(superrad.TestCase):
     fixtures = ['base/addon_3615', 'base/addon_3615_categories',
                 'base/addon_5579', 'base/users']
 
@@ -3083,7 +3082,7 @@ class TestResumeStep(TestSubmitBase):
                                             args=['a3615']))
 
 
-class TestSubmitSteps(test_utils.TestCase):
+class TestSubmitSteps(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -3178,30 +3177,31 @@ class TestUpload(files.tests.UploadTest):
 
     def post(self):
         data = 'some data'
-        return self.client.post(self.url, data, content_type='text',
-                                HTTP_X_FILE_NAME='filename.xpi',
-                                HTTP_X_FILE_SIZE=len(data))
+        self.filename = 'filename.xpi'
+        response =  self.client.post(self.url, data, content_type='text',
+                                     HTTP_X_FILE_NAME=self.filename,
+                                     HTTP_X_FILE_SIZE=len(data))
+        upload = FileUpload.objects.get(name=self.filename)
+        return response, upload
 
     def test_no_x_filesize(self):
         r = self.client.post(self.url, 'some data', content_type='text')
         eq_(r.status_code, 400)
 
     def test_create_fileupload(self):
-        self.post()
-        upload = FileUpload.objects.get()
+        _, upload = self.post()
         eq_(upload.name, 'filename.xpi')
         eq_(open(upload.path).read(), 'some data')
 
     def test_fileupload_user(self):
         self.client.login(username='regular@mozilla.com', password='password')
-        self.post()
+        _, upload = self.post()
         user = UserProfile.objects.get(email='regular@mozilla.com')
-        eq_(FileUpload.objects.get().user, user)
+        eq_(upload.user, user)
 
     @attr('validator')
     def test_fileupload_validation(self):
-        self.post()
-        fu = FileUpload.objects.get()
+        _, fu = self.post()
         assert_no_validation_errors(fu)
         assert fu.validation
         validation = json.loads(fu.validation)
@@ -3217,8 +3217,7 @@ class TestUpload(files.tests.UploadTest):
         eq_(msg['description'], u'')
 
     def test_redirect(self):
-        r = self.post()
-        upload = FileUpload.objects.get()
+        r, upload = self.post()
         url = reverse('devhub.upload_detail', args=[upload.pk, 'json'])
         self.assertRedirects(r, url)
 
@@ -3228,15 +3227,17 @@ class TestUploadDetail(files.tests.UploadTest):
 
     def post(self):
         data = 'some data'
-        return self.client.post(reverse('devhub.upload'),
-                                data, content_type='text',
-                                HTTP_X_FILE_NAME='filename.xpi',
-                                HTTP_X_FILE_SIZE=len(data))
+        self.filename = 'filename.xpi'
+        response = self.client.post(reverse('devhub.upload'),
+                                    data, content_type='text',
+                                    HTTP_X_FILE_NAME=self.filename,
+                                    HTTP_X_FILE_SIZE=len(data))
+        upload = FileUpload.objects.get(name=self.filename)
+        return response, upload
 
     @attr('validator')
     def test_detail_json(self):
-        self.post()
-        upload = FileUpload.objects.get()
+        _, upload = self.post()
         r = self.client.get(reverse('devhub.upload_detail',
                                     args=[upload.uuid, 'json']))
         eq_(r.status_code, 200)
@@ -3252,8 +3253,7 @@ class TestUploadDetail(files.tests.UploadTest):
         eq_(msg['tier'], 1)
 
     def test_detail_view(self):
-        self.post()
-        upload = FileUpload.objects.get()
+        _, upload = self.post()
         r = self.client.get(reverse('devhub.upload_detail',
                                     args=[upload.uuid]))
         eq_(r.status_code, 200)
@@ -3280,7 +3280,7 @@ class TestUploadValidation(files.tests.UploadTest):
             [[u'&lt;foo/&gt;'], u'&lt;em:description&gt;...'])
 
 
-class TestFileValidation(test_utils.TestCase):
+class TestFileValidation(superrad.TestCase):
     fixtures = ['base/apps', 'base/users',
                 'devhub/addon-validation-1', 'base/platforms']
 
@@ -3402,7 +3402,7 @@ def assert_json_field(request, field, msg):
     eq_(content[field], msg)
 
 
-class UploadTest(files.tests.UploadTest, test_utils.TestCase):
+class UploadTest(files.tests.UploadTest, superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -3411,8 +3411,6 @@ class UploadTest(files.tests.UploadTest, test_utils.TestCase):
         self.addon = Addon.objects.get(id=3615)
         self.version = self.addon.current_version
         self.addon.update(guid='guid@xpi')
-        if not Platform.objects.filter(id=amo.PLATFORM_MAC.id):
-            Platform.objects.create(id=amo.PLATFORM_MAC.id)
         assert self.client.login(username='del@icio.us', password='password')
 
 
@@ -3536,7 +3534,7 @@ class TestVersionXSS(UploadTest):
         assert '&lt;script&gt;alert' in r.content
 
 
-class TestCreateAddon(files.tests.UploadTest, test_utils.TestCase):
+class TestCreateAddon(files.tests.UploadTest, superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/platforms']
 
     def setUp(self):
@@ -3574,6 +3572,7 @@ class TestCreateAddon(files.tests.UploadTest, test_utils.TestCase):
              'Please choose another.'])
 
     def test_success(self):
+        Addon.objects.all().delete()
         eq_(Addon.objects.count(), 0)
         r = self.post()
         addon = Addon.objects.get()
@@ -3581,17 +3580,18 @@ class TestCreateAddon(files.tests.UploadTest, test_utils.TestCase):
                                         args=[addon.slug]))
 
     def test_one_xpi_for_multiple_platforms(self):
+        Addon.objects.all().delete()
         eq_(Addon.objects.count(), 0)
         r = self.post(platforms=[amo.PLATFORM_MAC,
                                  amo.PLATFORM_LINUX])
         addon = Addon.objects.get()
         self.assertRedirects(r, reverse('devhub.submit.3',
                                         args=[addon.slug]))
-        eq_(sorted([f.filename for f in addon.current_version.all_files]),
-            [u'xpi_name-0.1-linux.xpi', u'xpi_name-0.1-mac.xpi'])
+        eq_(sorted(f.filename for f in addon.current_version.all_files),
+            [u'xpi_name-0.1-fx-linux.xpi', u'xpi_name-0.1-fx-mac.xpi'])
 
 
-class TestDeleteAddon(test_utils.TestCase):
+class TestDeleteAddon(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):
@@ -3606,19 +3606,21 @@ class TestDeleteAddon(test_utils.TestCase):
         return r
 
     def test_bad_password(self):
+        count = Addon.objects.count()
         r = self.post(password='turd')
         eq_(r.context['title'],
             'Password was incorrect. Add-on was not deleted.')
-        eq_(Addon.objects.count(), 1)
+        eq_(Addon.objects.count(), count)
 
     def test_success(self):
+        count = Addon.objects.count()
         r = self.post(password='password')
         eq_(r.context['title'], 'Add-on deleted.')
-        eq_(Addon.objects.count(), 0)
+        eq_(Addon.objects.count(), count - 1)
         self.assertRedirects(r, reverse('devhub.addons'))
 
 
-class TestRequestReview(test_utils.TestCase):
+class TestRequestReview(superrad.TestCase):
     fixtures = ['base/users', 'base/platforms']
 
     def setUp(self):
@@ -3695,7 +3697,7 @@ class TestRequestReview(test_utils.TestCase):
         self.check_400(self.public_url)
 
 
-class TestRedirects(test_utils.TestCase):
+class TestRedirects(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):

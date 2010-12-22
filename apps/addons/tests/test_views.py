@@ -974,13 +974,16 @@ def test_paypal_language_code():
         d = views.contribute_url_params('bz', 32, 'name', 'url')
         eq_(d['lc'], lc)
 
-    check('US')
+    try:
+        check('US')
 
-    translation.activate('it')
-    check('IT')
+        translation.activate('it')
+        check('IT')
 
-    translation.activate('ru-DE')
-    check('RU')
+        translation.activate('ru-DE')
+        check('RU')
+    finally:
+        translation.deactivate_all()
 
 
 class TestAddonSharing(test_utils.TestCase):

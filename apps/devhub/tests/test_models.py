@@ -1,5 +1,6 @@
 import jingo
 import test_utils
+import superrad
 from nose.tools import eq_
 from mock import Mock
 from pyquery import PyQuery as pq
@@ -15,7 +16,7 @@ from users.models import UserProfile
 from versions.models import Version
 
 
-class TestActivityLog(test_utils.TestCase):
+class TestActivityLog(superrad.TestCase):
     fixtures = ['base/addon_3615']
 
     def setUp(self):
@@ -29,7 +30,7 @@ class TestActivityLog(test_utils.TestCase):
         amo.set_user(None)
 
     def test_basic(self):
-        a = Addon.objects.get()
+        a = Addon.objects.get(id=3615)
         amo.log(amo.LOG['CREATE_ADDON'], a)
         entries = ActivityLog.objects.for_addons(a)
         eq_(len(entries), 1)
@@ -70,7 +71,7 @@ class TestActivityLog(test_utils.TestCase):
         eq_(a.to_string(), 'Something magical happened.')
 
     def test_json_failboat(self):
-        a = Addon.objects.get()
+        a = Addon.objects.get(id=3615)
         amo.log(amo.LOG['CREATE_ADDON'], a)
         entry = ActivityLog.objects.get()
         entry._arguments = 'failboat?'
@@ -101,14 +102,14 @@ class TestActivityLog(test_utils.TestCase):
         u = UserProfile(username='Marlboro Manatee')
         u.save()
         amo.log(amo.LOG['ADD_USER_WITH_ROLE'],
-                u, 'developer', Addon.objects.get())
+                u, 'developer', Addon.objects.get(id=3615))
         entries = ActivityLog.objects.for_user(self.request.amo_user)
         eq_(len(entries), 1)
         entries = ActivityLog.objects.for_user(u)
         eq_(len(entries), 1)
 
     def test_xss_arguments(self):
-        addon = Addon.objects.get()
+        addon = Addon.objects.get(id=3615)
         au = AddonUser(addon=addon, user=self.user)
         amo.log(amo.LOG.CHANGE_USER_WITH_ROLE, au.user, au.get_role_display(),
                 addon)
@@ -118,7 +119,7 @@ class TestActivityLog(test_utils.TestCase):
             '<a href="/en-US/firefox/addon/a3615/">Delicious Bookmarks</a>.')
 
     def test_jinja_escaping(self):
-        addon = Addon.objects.get()
+        addon = Addon.objects.get(id=3615)
         au = AddonUser(addon=addon, user=self.user)
         amo.log(amo.LOG.CHANGE_USER_WITH_ROLE, au.user, au.get_role_display(),
                 addon)

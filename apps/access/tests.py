@@ -1,8 +1,8 @@
 from django.http import HttpRequest
 
 import mock
+import superrad
 from nose.tools import assert_false, eq_
-from test_utils import TestCase
 
 import amo
 from amo.urlresolvers import reverse
@@ -52,7 +52,7 @@ def test_anonymous_user():
     assert_false(action_allowed(fake_request, amo.FIREFOX, 'Admin:%'))
 
 
-class ACLTestCase(TestCase):
+class ACLTestCase(superrad.TestCase):
     """
     Test some basic ACLs by going to various locked pages on AMO.
     """
@@ -89,7 +89,7 @@ class ACLTestCase(TestCase):
         self.assertRedirects(r, '%s?to=%s' % (reverse('users.login'), url))
 
 
-class TestHasPerm(TestCase):
+class TestHasPerm(superrad.TestCase):
     fixtures = ['base/apps', 'base/users', 'base/addon_3615']
 
     def setUp(self):

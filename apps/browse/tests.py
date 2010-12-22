@@ -12,6 +12,7 @@ from nose.tools import eq_, assert_raises
 from pyquery import PyQuery as pq
 
 import test_utils
+import superrad
 
 import amo
 from amo.urlresolvers import reverse
@@ -91,18 +92,14 @@ class TestLanguageTools(test_utils.TestCase):
         eq_(list(response.context['locales']), [])
 
 
-class TestThemes(test_utils.TestCase):
+class TestThemes(superrad.TestCase):
     fixtures = ('base/category', 'base/addon_6704_grapple', 'base/addon_3615')
 
     def setUp(self):
         super(TestThemes, self).setUp()
         # Make all the add-ons themes.
-        for addon in Addon.objects.all():
-            addon.type = amo.ADDON_THEME
-            addon.save()
-        for category in Category.objects.all():
-            category.type = amo.ADDON_THEME
-            category.save()
+        Addon.objects.update(type=amo.ADDON_THEME)
+        Category.objects.update(type=amo.ADDON_THEME)
 
         self.base_url = reverse('browse.themes')
         self.exp_url = urlparams(self.base_url)
@@ -112,14 +109,6 @@ class TestThemes(test_utils.TestCase):
         response = self.client.get(self.base_url)
         eq_(response.context['sorting'], 'popular')
 
-    def test_unreviewed(self):
-        # Only 3 without unreviewed.
-        response = self.client.get(self.base_url)
-        eq_(len(response.context['themes'].object_list), 2)
-
-        response = self.client.get(self.exp_url)
-        eq_(len(response.context['themes'].object_list), 2)
-
     def _get_sort(self, sort):
         response = self.client.get(urlparams(self.exp_url, sort=sort))
         eq_(response.context['sorting'], sort)
@@ -127,23 +116,33 @@ class TestThemes(test_utils.TestCase):
 
     def test_download_sort(self):
         ids = self._get_sort('popular')
-        eq_(ids, [3615, 6704])
+        addons = sorted(Addon.objects.filter(id__in=ids),
+                        key=lambda a: a.weekly_downloads, reverse=True)
+        eq_([a.id for a in addons], ids)
 
     def test_name_sort(self):
         ids = self._get_sort('name')
-        eq_(ids, [3615, 6704])
+        addons = sorted(Addon.objects.filter(id__in=ids),
+                        key=lambda a: a.name)
+        eq_([a.id for a in addons], ids)
 
     def test_created_sort(self):
         ids = self._get_sort('created')
-        eq_(ids, [6704, 3615])
+        addons = sorted(Addon.objects.filter(id__in=ids),
+                        key=lambda a: a.created, reverse=True)
+        eq_([a.id for a in addons], ids)
 
     def test_updated_sort(self):
         ids = self._get_sort('updated')
-        eq_(ids, [6704, 3615])
+        addons = sorted(Addon.objects.filter(id__in=ids),
+                        key=lambda a: a.last_updated, reverse=True)
+        eq_([a.id for a in addons], ids)
 
     def test_rating_sort(self):
         ids = self._get_sort('rating')
-        eq_(ids, [6704, 3615])
+        addons = sorted(Addon.objects.filter(id__in=ids),
+                        key=lambda a: a.bayesian_rating, reverse=True)
+        eq_([a.id for a in addons], ids)
 
     def test_category_count(self):
         cat = Category.objects.filter(name__isnull=False)[0]
@@ -575,7 +574,7 @@ class TestSearchToolsFeed(BaseSearchToolsTest):
                 u'Ivan Krstić :: Search Tools :: Add-ons for Firefox')
 
 
-class TestLegacyRedirects(test_utils.TestCase):
+class TestLegacyRedirects(superrad.TestCase):
     fixtures = ('base/category.json',)
 
     def test_types(self):
@@ -604,7 +603,7 @@ class TestLegacyRedirects(test_utils.TestCase):
         redirects('/recommended/format:rss', '/featured/format:rss')
 
 
-class TestFeaturedPage(test_utils.TestCase):
+class TestFeaturedPage(superrad.TestCase):
     fixtures = ('base/apps', 'addons/featured')
 
     def test_featured_addons(self):
@@ -614,7 +613,7 @@ class TestFeaturedPage(test_utils.TestCase):
         eq_([1001, 1003], sorted(a.id for a in response.context['addons']))
 
 
-class TestCategoriesFeed(test_utils.TestCase):
+class TestCategoriesFeed(superrad.TestCase):
 
     def setUp(self):
         self.feed = feeds.CategoriesRss()
@@ -644,7 +643,7 @@ class TestCategoriesFeed(test_utils.TestCase):
         assert t.endswith(url), t
 
 
-class TestFeaturedFeed(test_utils.TestCase):
+class TestFeaturedFeed(superrad.TestCase):
     fixtures = ('base/apps', 'addons/featured')
 
     def test_feed_elements_present(self):
@@ -661,7 +660,7 @@ class TestFeaturedFeed(test_utils.TestCase):
         eq_(len(doc('rss channel item')), 2)
 
 
-class TestPersonas(test_utils.TestCase):
+class TestPersonas(superrad.TestCase):
     fixtures = ('base/apps', 'addons/featured')
 
     def test_personas(self):

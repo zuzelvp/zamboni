@@ -1,14 +1,14 @@
 from django import http
 
 import mock
-import test_utils
+import superrad
 from nose.tools import eq_
 
 from addons.models import Addon
 from addons import decorators as dec
 
 
-class TestAddonView(test_utils.TestCase):
+class TestAddonView(superrad.TestCase):
 
     def setUp(self):
         self.addon = Addon.objects.create(slug='x', type=1)

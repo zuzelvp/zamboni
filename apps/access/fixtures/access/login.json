@@ -7,6 +7,8 @@
         "username": "fligtard",
         "firstname": "Scott",
         "lastname": "Bakula",
+        "created": "2009-02-02 11:50:31",
+        "modified": "2010-01-12 17:01:41",
         "email": "scott@bakula.com",
         "emailhidden": 1,
         "sandboxshown": 1,
@@ -38,6 +40,8 @@
         "sandboxshown": 1,
         "display_collections": 1,
         "display_collections_fav": 1,
+        "created": "2009-02-02 11:50:31",
+        "modified": "2010-01-12 17:01:41",
         "notifycompat": 1,
         "notifyevents": 1
     }
@@ -56,7 +60,9 @@
       "model": "access.group",
       "fields": {
           "name": "Admins",
-          "rules": "*:*"
+          "rules": "*:*",
+          "created": "2009-02-02 11:50:31",
+          "modified": "2010-01-12 17:01:41"
       }
   },
   {
@@ -67,5 +73,4 @@
           "user": 1
       }
   }
-
 ]

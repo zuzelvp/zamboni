@@ -1,8 +1,9 @@
 import json
 
 from django.core.management import call_command
+
+import superrad
 from nose.tools import eq_
-import test_utils
 
 import amo
 from amo.helpers import url
@@ -10,7 +11,7 @@ from applications.models import AppVersion, Application
 from applications.management.commands import dump_apps
 
 
-class TestAppVersion(test_utils.TestCase):
+class TestAppVersion(superrad.TestCase):
 
     def test_major_minor(self):
         """Check that major/minor/alpha is getting set."""
@@ -37,7 +38,7 @@ class TestAppVersion(test_utils.TestCase):
         eq_(v.minor3, None)
 
 
-class TestApplication(test_utils.TestCase):
+class TestApplication(superrad.TestCase):
     fixtures = ['applications/all_apps.json']
 
     def test_string_representation(self):
@@ -50,7 +51,7 @@ class TestApplication(test_utils.TestCase):
             eq_(unicode(model_app), unicode(static_app.pretty))
 
 
-class TestViews(test_utils.TestCase):
+class TestViews(superrad.TestCase):
     fixtures = ['base/appversion']
 
     def test_appversions(self):
@@ -60,7 +61,7 @@ class TestViews(test_utils.TestCase):
         eq_(self.client.get(url('apps.appversions.rss')).status_code, 200)
 
 
-class TestCommands(test_utils.TestCase):
+class TestCommands(superrad.TestCase):
     fixtures = ['applications/all_apps.json', 'base/appversion']
 
     def test_dump_apps(self):
@@ -71,12 +72,12 @@ class TestCommands(test_utils.TestCase):
         assert len(db_apps)
         for app in db_apps:
             data = apps[str(app.id)]
-            versions = sorted([a.version for a in
-                               AppVersion.objects.filter(application=app)])
+            versions = list(AppVersion.objects.filter(application=app)
+                            .values_list('version', flat=True))
             if app.id == amo.FIREFOX.id:
                 versions.append(u'4.0.*') # bug 613234
             r_app = amo.APPS_ALL[app.id]
             eq_("%s: %r" % (r_app.short, sorted(data['versions'])),
-                "%s: %r" % (r_app.short, versions))
+                "%s: %r" % (r_app.short, sorted(versions)))
             eq_(data['name'], r_app.short)
             eq_(data['guid'], app.guid)

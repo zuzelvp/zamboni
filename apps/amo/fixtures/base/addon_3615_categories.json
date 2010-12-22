@@ -11,7 +11,7 @@
             "application": 1,
             "type": 1,
             "slug": "bookmarks",
-            "name": 1
+            "name": 700381
         }
     },
     {
@@ -26,22 +26,16 @@
             "application": 1,
             "type": 1,
             "slug": "social",
-            "name": 2
+            "name": 700382
         }
     },
     {
-        "pk": 23,
-        "model": "addons.category",
+        "pk": 6355,
+        "model": "addons.addoncategory",
         "fields": {
-            "count": 901,
-            "description": null,
-            "weight": 0,
-            "created": "2007-03-05 13:09:27",
-            "modified": "2010-02-23 19:17:32",
-            "application": 1,
-            "type": 1,
-            "slug": "feeds",
-            "name": 3
+            "category": 24,
+            "feature": 1,
+            "addon": 3615
         }
     },
     {
@@ -52,7 +46,7 @@
             "created": "2010-12-20 16:18:56",
             "locale": "en-us",
             "modified": "2010-12-20 16:18:56",
-            "id": 1,
+            "id": 700381,
             "localized_string": "Bookmarks"
         }
     },
@@ -64,20 +58,8 @@
             "created": "2010-12-20 16:18:56",
             "locale": "en-us",
             "modified": "2010-12-20 16:18:56",
-            "id": 2,
+            "id": 700382,
             "localized_string": "Social"
-        }
-    },
-    {
-        "pk": 700383,
-        "model": "translations.translation",
-        "fields": {
-            "localized_string_clean": null,
-            "created": "2010-12-20 16:18:56",
-            "locale": "en-us",
-            "modified": "2010-12-20 16:18:56",
-            "id": 3,
-            "localized_string": "Feeds"
         }
     }
 ]

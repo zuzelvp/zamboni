@@ -1,4 +1,4 @@
-import test_utils
+import superrad
 from nose.tools import eq_
 
 from redisutils import mock_redis, reset_redis
@@ -8,13 +8,13 @@ from addons.utils import ReverseNameLookup
 from addons import cron
 
 
-class TestReverseNameLookup(test_utils.TestCase):
-    fixtures = ('base/addon_3615',)
+class TestReverseNameLookup(superrad.TestCase):
+    fixtures = ['base/addon_3615']
 
     def setUp(self):
         self._redis = mock_redis()
         cron.build_reverse_name_lookup()
-        self.addon = Addon.objects.get()
+        self.addon = Addon.objects.get(id=3615)
 
     def tearDown(self):
         reset_redis(self._redis)

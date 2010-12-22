@@ -5,6 +5,7 @@ from django.utils import translation
 from django.utils.functional import lazy
 
 import jinja2
+import superrad
 from nose.tools import eq_
 from test_utils import ExtraAppTestCase, trans_eq
 
@@ -19,7 +20,7 @@ def ids(qs):
     return [o.id for o in qs]
 
 
-class TranslationFixturelessTestCase(test.TestCase):
+class TranslationFixturelessTestCase(superrad.TestCase):
     "We want to be able to rollback stuff."
 
     def test_whitespace(self):
@@ -28,7 +29,7 @@ class TranslationFixturelessTestCase(test.TestCase):
         eq_('khaaaaaan!', t.localized_string)
 
 
-class TranslationSequenceTestCase(test.TestCase):
+class TranslationSequenceTestCase(superrad.TestCase):
     """
     Make sure automatic translation sequence generation works
     as expected.
@@ -61,7 +62,7 @@ class TranslationSequenceTestCase(test.TestCase):
             'Translation sequence needs to keep increasing.')
 
 
-class TranslationTestCase(ExtraAppTestCase):
+class TranslationTestCase(ExtraAppTestCase, superrad.TestCase):
     fixtures = ['testapp/test_models.json']
     extra_apps = ['translations.tests.testapp']
 

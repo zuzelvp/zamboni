@@ -12,7 +12,7 @@ from django.conf import settings
 
 import mock
 import path
-import test_utils
+import superrad
 from nose.tools import eq_
 
 import amo.utils
@@ -23,7 +23,7 @@ from files.utils import parse_xpi, parse_search, parse_addon
 from versions.models import Version
 
 
-class UploadTest(test_utils.TestCase):
+class UploadTest(superrad.TestCase):
     """
     Base for tests that mess with file uploads, safely using temp directories.
     """
@@ -60,7 +60,7 @@ class UploadTest(test_utils.TestCase):
         return upload
 
 
-class TestFile(test_utils.TestCase):
+class TestFile(superrad.TestCase):
     """
     Tests the methods of the File model.
     """
@@ -144,13 +144,8 @@ class TestFile(test_utils.TestCase):
             '-0.1.7-fx.xpi')
 
 
-class TestParseXpi(test_utils.TestCase):
-    fixtures = ['base/apps']
-
-    def setUp(self):
-        for version in ('3.0', '3.6.*'):
-            AppVersion.objects.create(application_id=amo.FIREFOX.id,
-                                      version=version)
+class TestParseXpi(superrad.TestCase):
+    fixtures = ['base/apps', 'base/appversions']
 
     def parse(self, addon=None, filename='extension.xpi'):
         path = 'apps/files/fixtures/files/' + filename
@@ -172,8 +167,8 @@ class TestParseXpi(test_utils.TestCase):
     def test_parse_apps(self):
         exp = (amo.FIREFOX,
                amo.FIREFOX.id,
-               AppVersion.objects.get(version='3.0'),
-               AppVersion.objects.get(version='3.6.*'))
+               AppVersion.objects.get(version='3.0', application=1),
+               AppVersion.objects.get(version='3.6.*', application=1))
         eq_(self.parse()['apps'], [exp])
 
     def test_parse_apps_bad_appver(self):
@@ -225,14 +220,9 @@ class TestParseXpi(test_utils.TestCase):
     # parse_search_engine?
 
 
-class TestParseAlternateXpi(test_utils.TestCase):
+class TestParseAlternateXpi(superrad.TestCase):
     # This install.rdf is completely different from our other xpis.
-    fixtures = ['base/apps']
-
-    def setUp(self):
-        for version in ('3.0', '4.0b3pre'):
-            AppVersion.objects.create(application_id=amo.FIREFOX.id,
-                                      version=version)
+    fixtures = ['base/apps', 'base/appversions']
 
     def parse(self, filename='alt-rdf.xpi'):
         path = 'apps/files/fixtures/files/' + filename
@@ -241,7 +231,7 @@ class TestParseAlternateXpi(test_utils.TestCase):
 
     def test_parse_basics(self):
         # Everything but the apps.
-        exp = {'guid': '{2fa4ed95-0317-4c6a-a74c-5f3e3912c1f9}',
+        exp = {'guid': 'not@delicious',
                'name': 'Delicious Bookmarks',
                'summary': 'Access your bookmarks wherever you go and keep '
                               'them organized no matter how many you have.',
@@ -255,8 +245,8 @@ class TestParseAlternateXpi(test_utils.TestCase):
     def test_parse_apps(self):
         exp = (amo.FIREFOX,
                amo.FIREFOX.id,
-               AppVersion.objects.get(version='3.0'),
-               AppVersion.objects.get(version='4.0b3pre'))
+               AppVersion.objects.get(version='3.0', application=1),
+               AppVersion.objects.get(version='4.0b3pre', application=1))
         eq_(self.parse()['apps'], [exp])
 
     @mock.patch('files.utils.rdflib.Graph')
@@ -316,16 +306,11 @@ class TestFileUpload(UploadTest):
 
 
 class TestFileFromUpload(UploadTest):
-    fixtures = ['base/apps']
+    fixtures = ['base/apps', 'base/platforms']
 
     def setUp(self):
         super(TestFileFromUpload, self).setUp()
-        appver = {amo.FIREFOX: ['3.0', '3.6', '3.6.*', '4.0b6'],
-                  amo.MOBILE: ['0.1', '2.0a1pre']}
-        for app, versions in appver.items():
-            for version in versions:
-                AppVersion(application_id=app.id, version=version).save()
-        self.platform = Platform.objects.create(id=amo.PLATFORM_MAC.id)
+        self.platform = Platform.objects.get(id=amo.PLATFORM_MAC.id)
         self.addon = Addon.objects.create(guid='guid@jetpack',
                                           type=amo.ADDON_EXTENSION,
                                           name='xxx')
@@ -397,7 +382,7 @@ class TestFileFromUpload(UploadTest):
         eq_(f.status, amo.STATUS_BETA)
 
 
-class TestZip(test_utils.TestCase):
+class TestZip(superrad.TestCase):
 
     def test_zip(self):
         # This zip contains just one file chrome/ that we expect
@@ -417,7 +402,7 @@ class TestZip(test_utils.TestCase):
             shutil.rmtree(dest)
 
 
-class TestParseSearch(test_utils.TestCase):
+class TestParseSearch(superrad.TestCase):
 
     def parse(self, filename='search.xml'):
         path = 'apps/files/fixtures/files/' + filename

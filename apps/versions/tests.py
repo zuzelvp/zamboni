@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 
 import mock
-import test_utils
+import superrad
 from nose.tools import eq_
 from pyquery import PyQuery
 
@@ -45,8 +45,8 @@ def test_dict_from_int():
     eq_(d['pre_ver'], 2)
 
 
-class TestVersion(test_utils.TestCase):
-    fixtures = ['base/addon_3615', 'base/admin', 'base/platforms']
+class TestVersion(superrad.TestCase):
+    fixtures = ['base/addon_3615', 'base/users', 'base/platforms']
 
     def test_compatible_apps(self):
         v = Version.objects.get(pk=81551)
@@ -166,7 +166,7 @@ class TestVersion(test_utils.TestCase):
         assert not version.is_allowed_upload()
 
 
-class TestViews(test_utils.TestCase):
+class TestViews(superrad.TestCase):
     fixtures = ['addons/eula+contrib-addon', 'base/apps']
 
     def setUp(self):
@@ -206,7 +206,7 @@ class TestViews(test_utils.TestCase):
         eq_(doc('.version').attr('id'), 'version-%s' % version)
 
 
-class TestFeeds(test_utils.TestCase):
+class TestFeeds(superrad.TestCase):
     fixtures = ['addons/eula+contrib-addon', 'base/apps']
 
     def test_feed_elements_present(self):
@@ -234,8 +234,8 @@ class TestFeeds(test_utils.TestCase):
         assert item_pubdate.text == 'Thu, 21 May 2009 05:37:15 -0700'
 
 
-class TestDownloadsBase(test_utils.TestCase):
-    fixtures = ['base/apps', 'base/addon_5299_gcal', 'base/admin']
+class TestDownloadsBase(superrad.TestCase):
+    fixtures = ['base/apps', 'base/addon_5299_gcal', 'base/users', 'base/platforms']
 
     def setUp(self):
         self.addon = Addon.objects.get(id=5299)
@@ -300,7 +300,7 @@ class TestDownloads(TestDownloadsBase):
 
     def test_admin_disabled_ok_for_admin(self):
         self.addon.update(status=amo.STATUS_DISABLED)
-        self.client.login(username='jbalogh@mozilla.com', password='password')
+        self.client.login(username='admin@mozilla.com', password='password')
         self.assert_served_locally(self.client.get(self.file_url))
 
     def test_user_disabled_ok_for_author(self):
@@ -310,7 +310,7 @@ class TestDownloads(TestDownloadsBase):
 
     def test_user_disabled_ok_for_admin(self):
         self.addon.update(disabled_by_user=True)
-        self.client.login(username='jbalogh@mozilla.com', password='password')
+        self.client.login(username='admin@mozilla.com', password='password')
         self.assert_served_locally(self.client.get(self.file_url))
 
     def test_type_attachment(self):
@@ -360,7 +360,7 @@ class TestDownloadsLatest(TestDownloadsBase):
 
     def setUp(self):
         super(TestDownloadsLatest, self).setUp()
-        self.platform = Platform.objects.create(id=5)
+        self.platform = Platform.objects.get(id=5)
 
     def assert_served_by_mirror(self, response):
         # Follow one more hop to hit the downloads.files view.
@@ -416,7 +416,7 @@ class TestDownloadsLatest(TestDownloadsBase):
         self.assert_served_locally(self.client.get(url), attachment=True)
 
     def test_platform_multiple_objects(self):
-        p = Platform.objects.create(id=3)
+        p = Platform.objects.get(id=3)
         f = File.objects.create(platform=p, version=self.file.version,
                                 filename='unst.xpi')
         url = reverse('downloads.latest',
@@ -430,17 +430,15 @@ class TestDownloadsLatest(TestDownloadsBase):
         assert r['Location'].endswith('?src=xxx'), r['Location']
 
 
-class TestVersionFromUpload(files.tests.UploadTest, test_utils.TestCase):
-    fixtures = ['base/apps', 'base/addon_3615', 'base/users']
+class TestVersionFromUpload(files.tests.UploadTest, superrad.TestCase):
+    fixtures = ['base/apps', 'base/addon_3615', 'base/users', 'base/platforms']
 
     def setUp(self):
         super(TestVersionFromUpload, self).setUp()
         self.upload = self.get_upload(self.filename)
         self.addon = Addon.objects.get(id=3615)
         self.addon.update(guid='guid@xpi')
-        self.platform = Platform.objects.create(id=amo.PLATFORM_MAC.id)
-        for version in ('3.0', '3.6.*'):
-            AppVersion.objects.create(application_id=1, version=version)
+        self.platform = Platform.objects.get(id=amo.PLATFORM_MAC.id)
 
 
 class TestExtensionVersionFromUpload(TestVersionFromUpload):

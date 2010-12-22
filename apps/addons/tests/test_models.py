@@ -12,6 +12,7 @@ from django.utils import translation
 from mock import patch
 from nose.tools import eq_, assert_not_equal
 import test_utils
+import superrad
 
 import amo
 import files.tests
@@ -458,7 +459,7 @@ class TestAddonModels(test_utils.TestCase):
         assert 'DELETED BY: Unknown' in mail.outbox[0].body
 
 
-class TestCategoryModel(test_utils.TestCase):
+class TestCategoryModel(superrad.TestCase):
 
     def test_category_url(self):
         """Every type must have a url path for its categories."""
@@ -469,7 +470,7 @@ class TestCategoryModel(test_utils.TestCase):
             assert cat.get_url_path()
 
 
-class TestPersonaModel(test_utils.TestCase):
+class TestPersonaModel(superrad.TestCase):
 
     def test_image_urls(self):
         mypersona = Persona(id=1234, persona_id=9876)
@@ -481,7 +482,7 @@ class TestPersonaModel(test_utils.TestCase):
         assert p.update_url.endswith('9876')
 
 
-class TestPreviewModel(test_utils.TestCase):
+class TestPreviewModel(superrad.TestCase):
 
     fixtures = ['base/previews']
 
@@ -791,9 +792,7 @@ class TestAddonFromUpload(files.tests.UploadTest):
 
     def setUp(self):
         super(TestAddonFromUpload, self).setUp()
-        self.platform = Platform.objects.create(id=amo.PLATFORM_MAC.id)
-        for version in ('3.0', '3.6.*'):
-            AppVersion.objects.create(application_id=1, version=version)
+        self.platform = Platform.objects.get(id=amo.PLATFORM_MAC.id)
 
     def test_blacklisted_guid(self):
         BlacklistedGuid.objects.create(guid='guid@xpi')

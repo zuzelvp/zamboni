@@ -1,14 +1,5 @@
 [
     {
-        "pk": 1,
-        "model": "applications.application",
-        "fields": {
-            "guid": "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}",
-            "modified": "2008-11-03 15:34:59",
-            "created": "2007-03-05 13:09:26"
-        }
-    },
-    {
         "pk": 418039,
         "model": "translations.translation",
         "fields": {
@@ -346,6 +337,16 @@
         }
     },
     {
+        "pk": 444,
+        "model": "translations.translation",
+        "fields": {
+            "localized_string": "Bookmarks",
+            "created": "2009-05-11 22:06:47",
+            "locale": "en-US",
+            "id": 444
+        }
+    },
+    {
         "pk": 22,
         "model": "addons.category",
         "fields": {
@@ -357,22 +358,17 @@
             "application": 1,
             "type": 1,
             "slug": "bookmarks",
-            "name": null
+            "name": 444
         }
     },
     {
-        "pk": 24,
-        "model": "addons.category",
+        "pk": 666,
+        "model": "translations.translation",
         "fields": {
-            "count": 901,
-            "description": null,
-            "weight": 0,
-            "created": "2007-03-05 13:09:27",
-            "modified": "2010-02-23 19:17:32",
-            "application": 1,
-            "type": 1,
-            "slug": "social",
-            "name": null
+            "localized_string": "Feeds",
+            "created": "2009-05-11 22:06:47",
+            "locale": "en-US",
+            "id": 666
         }
     },
     {
@@ -387,7 +383,7 @@
             "application": 1,
             "type": 1,
             "slug": "feeds",
-            "name": null
+            "name": 666
         }
     },
     {
@@ -404,15 +400,6 @@
         "model": "addons.addoncategory",
         "fields": {
             "category": 23,
-            "feature": 1,
-            "addon": 3615
-        }
-    },
-    {
-        "pk": 6345,
-        "model": "addons.addoncategory",
-        "fields": {
-            "category": 24,
             "feature": 1,
             "addon": 3615
         }

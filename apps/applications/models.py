@@ -5,7 +5,6 @@ from versions import compare
 
 
 class Application(amo.models.ModelBase):
-
     guid = models.CharField(max_length=255, default='')
     # We never reference these translated fields, so stop loading them.
     # name = TranslatedField()
@@ -21,7 +20,6 @@ class Application(amo.models.ModelBase):
 
 
 class AppVersion(amo.models.ModelBase):
-
     application = models.ForeignKey(Application)
     version = models.CharField(max_length=255, default='')
     version_int = models.BigIntegerField(editable=False)

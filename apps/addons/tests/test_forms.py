@@ -3,7 +3,7 @@ import os
 import shutil
 import tempfile
 
-import test_utils
+import superrad
 from nose.tools import eq_
 from mock import patch
 
@@ -16,7 +16,7 @@ import amo
 from amo.tests.test_helpers import get_image_path
 
 
-class FormsTest(test_utils.TestCase):
+class FormsTest(superrad.TestCase):
     fixtures = ('base/addon_3615', 'base/addon_3615_categories')
 
     def setUp(self):
@@ -25,6 +25,7 @@ class FormsTest(test_utils.TestCase):
         self.existing_name = 'Delicious Bookmarks'
         self.error_msg = ('This add-on name is already in use. '
                           'Please choose another.')
+        self.addon = Addon.objects.get(id=3615)
 
     def tearDown(self):
         reset_redis(self._redis)
@@ -51,9 +52,8 @@ class FormsTest(test_utils.TestCase):
         """
         Exiting add-ons should be able to re-use their name.
         """
-        delicious = Addon.objects.get()
         f = forms.AddonFormBasic(dict(name=self.existing_name), request=None,
-                                 instance=delicious)
+                                 instance=self.addon)
         eq_(f.errors.get('name'), None)
 
     def test_locales(self):
@@ -61,14 +61,15 @@ class FormsTest(test_utils.TestCase):
         eq_(form.fields['default_locale'].choices[0][0], 'af')
 
     def test_category_order(self):
+        # Make sure the category names are getting sorted.
         form = forms.AddonFormBasic(dict(name=self.existing_name),
-                                    request=None, instance=Addon.objects.get())
-        names = ['Bookmarks', 'Feeds', 'Social']
+                                    request=None, instance=self.addon)
         categories = form.fields['categories'].queryset
-        eq_(sorted(names), [str(f.name) for f in categories.all()])
+        names = [unicode(f.name) for f in categories.all()]
+        eq_(sorted(names), names)
 
 
-class TestTagsForm(test_utils.TestCase):
+class TestTagsForm(superrad.TestCase):
     fixtures = ['base/addon_3615', 'base/platforms', 'base/users']
 
     def setUp(self):
@@ -121,7 +122,7 @@ class TestTagsForm(test_utils.TestCase):
         eq_(self.get_tag_text(), [u'Österreich'.lower()])
 
 
-class TestIconRemoval(test_utils.TestCase):
+class TestIconRemoval(superrad.TestCase):
     fixtures = ['base/addon_3615']
 
     # TODO: AddonFormMedia save() method could do with cleaning up
@@ -159,7 +160,7 @@ class TestIconRemoval(test_utils.TestCase):
             assert os.path.exists(path)
 
 
-class TestUpdate(test_utils.TestCase):
+class TestUpdate(superrad.TestCase):
     fixtures = ['base/addon_3615',
                 'base/platforms',
                 'base/appversion']
