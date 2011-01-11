@@ -129,7 +129,7 @@ class TestActivityLog(superrad.TestCase):
             ' href="/en-US/firefox/addon/a3615/">Delicious Bookmarks</a>.</p>')
 
     def test_tag_no_match(self):
-        addon = Addon.objects.get()
+        addon = Addon.objects.get(id=3615)
         tag = Tag.objects.create(tag_text='http://foo.com')
         amo.log(amo.LOG.ADD_TAG, addon, tag)
         log = ActivityLog.objects.get()

@@ -187,7 +187,7 @@ class TestParseXpi(superrad.TestCase):
         addon = Addon.objects.create(guid='xxx', type=1)
         with self.assertRaises(forms.ValidationError) as e:
             self.parse(addon)
-        eq_(e.exception.messages, ["UUID doesn't match add-on"])
+        eq_(e.exception.messages, ["UUID doesn't match add-on."])
 
     def test_guid_dupe(self):
         Addon.objects.create(guid='guid@xpi', type=1)
