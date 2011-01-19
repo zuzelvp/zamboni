@@ -124,6 +124,54 @@ usually in the fixtues.  For example, some featured items have expiration dates.
 <p>We can usually save our future-selves time by setting these expirations far in
 the future.</p>
 </div>
+<div class="section" id="localization-tests">
+<h2>Localization Tests<a class="headerlink" href="#localization-tests" title="Permalink to this headline">¶</a></h2>
+<p>If you want test that your localization works then you can add in locales
+in the test directory. For an example see <tt class="docutils literal"><span class="pre">devhub/tests/locale</span></tt>. These locales
+are not in the normal path so should not show up unless you add them to the
+<cite>LOCALE_PATH</cite>. If you change the .po files for these test locales, you will
+need to recompile the .mo files manually, for example:</p>
+<div class="highlight-python"><pre>msgfmt --check-format -o django.mo django.po</pre>
+</div>
+</div>
+<div class="section" id="javascript-tests">
+<h2>JavaScript Tests<a class="headerlink" href="#javascript-tests" title="Permalink to this headline">¶</a></h2>
+<p>Frontend JavaScript is currently tested with <a class="reference external" href="http://docs.jquery.com/Qunit">QUnit</a>, a simple set of
+functions for test setup/teardown and assertions.</p>
+<div class="section" id="running-javascript-tests">
+<h3>Running JavaScript Tests<a class="headerlink" href="#running-javascript-tests" title="Permalink to this headline">¶</a></h3>
+<p>You can run the tests a few different ways but during development you
+probably want to run them in a web browser by opening this page:
+<a class="reference external" href="http://127.0.0.1:8000/en-US/firefox/qunit/">http://127.0.0.1:8000/en-US/firefox/qunit/</a></p>
+<p>Before you can load that page, you&#8217;ll need to adjust your settings_local.py
+file so it includes django-qunit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">+=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;django_qunit&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-javascript-tests">
+<h3>Writing JavaScript Tests<a class="headerlink" href="#writing-javascript-tests" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://docs.jquery.com/Qunit">QUnit</a> tests for the HTML page above are discovered automatically.  Just add
+some_test.js to <tt class="docutils literal"><span class="pre">media/js/zamboni/tests/</span></tt> and it will run in the suite.  If
+you need to include a library file to test against, edit
+<tt class="docutils literal"><span class="pre">media/js/zamboni/tests/suite.json</span></tt>.</p>
+<p><a class="reference external" href="http://docs.jquery.com/Qunit">QUnit</a> has some good examples for writing tests.  Here are a few
+additional tips:</p>
+<ul class="simple">
+<li>Any HTML required for your test should go in a sandbox using
+<tt class="docutils literal"><span class="pre">tests.createSandbox('#your-template')</span></tt>.
+See js/zamboni/tests.js for details.</li>
+<li>To make a useful test based on an actual production template, you can create
+a snippet and include that in <tt class="docutils literal"><span class="pre">templates/qunit.html</span></tt> assigned to its own
+div.  During test setup, reference the div in createSandbox()</li>
+<li>You can use <a class="reference external" href="http://enterprisejquery.com/2010/07/mock-your-ajax-requests-with-mockjax-for-rapid-development/">$.mockjax</a> to test how your code handles server responses,
+errors, and timeouts.</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -146,6 +194,12 @@ the future.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#why-tests-fail">Why Tests Fail</a></li>
+<li><a class="reference internal" href="#localization-tests">Localization Tests</a></li>
+<li><a class="reference internal" href="#javascript-tests">JavaScript Tests</a><ul>
+<li><a class="reference internal" href="#running-javascript-tests">Running JavaScript Tests</a></li>
+<li><a class="reference internal" href="#writing-javascript-tests">Writing JavaScript Tests</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -198,7 +252,11 @@ the future.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2009, The Zamboni Collective.
+<<<<<<< HEAD
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+=======
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+>>>>>>> 7c46185a979946d6726a32a2eb37c3393876631b
     </div>
   </body>
 </html>
