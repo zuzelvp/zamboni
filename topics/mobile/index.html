@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAuth &mdash; zamboni v0.8 documentation</title>
+    <title>Working on the Mobile Site &mdash; zamboni v0.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.8 documentation" href="../../" />
-    <link rel="next" title="Packaging in Zamboni" href="../packages/" />
-    <link rel="prev" title="Working on the Mobile Site" href="../mobile/" /> 
+    <link rel="next" title="OAuth" href="../oauth/" />
+    <link rel="prev" title="Logging" href="../logging/" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,10 @@
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../packages/" title="Packaging in Zamboni"
+          <a href="../oauth/" title="OAuth"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../mobile/" title="Working on the Mobile Site"
+          <a href="../logging/" title="Logging"
              accesskey="P">previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>
@@ -51,24 +51,23 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="oauth">
-<h1>OAuth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h1>
-<p>The new API (<tt class="docutils literal"><span class="pre">/api/2/*</span></tt>) is powered by Piston and authentication is provided
-for via OAuth.  OAuth is a means for users to grant permissions to a third
-party application to act on their behalf without supplying a username and
-password.</p>
-<div class="section" id="the-oauth-dance">
-<h2>The OAuth Dance<a class="headerlink" href="#the-oauth-dance" title="Permalink to this headline">¶</a></h2>
-<p>The OAuth &#8220;dance&#8221; involves a number of steps:</p>
-<ol class="arabic simple">
-<li><strong>Requesting an OAuth Request Token.</strong>  The third party app (e.g. Flight
-Deck) requests a <em>Request Token</em> from the website (e.g. AMO).</li>
-<li>The app sends the user with the <em>Request Token</em> to an authorization page.</li>
-<li>The app requests an <em>Access Token</em> with the user-authorized <em>Request Token</em>.</li>
-</ol>
-<p>Each of these reuqests must contain various OAuth headers, request parameters
-and be signed in a specific manner.</p>
-<p>This is detailed in our api tests in <tt class="docutils literal"><span class="pre">_oauth_flow</span></tt>.</p>
+  <div class="section" id="working-on-the-mobile-site">
+<span id="mobile"></span><h1>Working on the Mobile Site<a class="headerlink" href="#working-on-the-mobile-site" title="Permalink to this headline">¶</a></h1>
+<p>The mobile version of amo expects to be served through <cite>MOBILE_DOMAIN</cite> (the
+normal site is served through <cite>DOMAIN</cite>).</p>
+<div class="section" id="defining-domains">
+<h2>Defining domains<a class="headerlink" href="#defining-domains" title="Permalink to this headline">¶</a></h2>
+<p>In <cite>/etc/hosts</cite> I have localhost (<cite>127.0.0.1</cite>) aliased to <cite>z</cite> for brevity. Then
+I added another <cite>mz</cite> alias for the mobile domain:</p>
+<div class="highlight-python"><pre>127.0.0.1   localhost z mz</pre>
+</div>
+<p>I let zamboni know about all this in <cite>settings_local.py</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DOMAIN</span> <span class="o">=</span> <span class="s">&#39;z&#39;</span>
+<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s">&#39;http://</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">DOMAIN</span>
+<span class="n">MOBILE_DOMAIN</span> <span class="o">=</span> <span class="s">&#39;mz&#39;</span>
+<span class="n">MOBILE_SITE_URL</span> <span class="o">=</span> <span class="s">&#39;http://</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">MOBILE_DOMAIN</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -80,21 +79,21 @@ and be signed in a specific manner.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">OAuth</a><ul>
-<li><a class="reference internal" href="#the-oauth-dance">The OAuth Dance</a></li>
+<li><a class="reference internal" href="#">Working on the Mobile Site</a><ul>
+<li><a class="reference internal" href="#defining-domains">Defining domains</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../mobile/"
-                        title="previous chapter">Working on the Mobile Site</a></p>
+  <p class="topless"><a href="../logging/"
+                        title="previous chapter">Logging</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../packages/"
-                        title="next chapter">Packaging in Zamboni</a></p>
+  <p class="topless"><a href="../oauth/"
+                        title="next chapter">OAuth</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/topics/oauth.txt"
+    <li><a href="../../_sources/topics/mobile.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -124,10 +123,10 @@ and be signed in a specific manner.</p>
           <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../packages/" title="Packaging in Zamboni"
+          <a href="../oauth/" title="OAuth"
              >next</a> |</li>
         <li class="right" >
-          <a href="../mobile/" title="Working on the Mobile Site"
+          <a href="../logging/" title="Logging"
              >previous</a> |</li>
         <li><a href="../../">zamboni v0.8 documentation</a> &raquo;</li> 
       </ul>

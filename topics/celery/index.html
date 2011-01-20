@@ -71,12 +71,16 @@ comes in.</p>
 </div>
 <p>Setting up rabbitmq invovles some configuration.  You may want to define the
 following</p>
-<div class="highlight-python"><pre>$HOSTNAME = 'mylaptop.local'</pre>
+<div class="highlight-python"><pre># On a Mac, you can find this in System Preferences &gt; Sharing
+export HOSTNAME='&lt;laptop name&gt;.local'</pre>
 </div>
 <p>Then run the following commands:</p>
 <div class="highlight-python"><pre># Set your host up so it's semi-permanent
 sudo scutil --set HostName $HOSTNAME
-cat 127.0.0.1 $HOSTNAME | sudo tee /etc/hosts
+
+# Update your hosts by either:
+# 1) Manually editing /etc/hosts
+# 2) `echo 127.0.0.1 $HOSTNAME &gt;&gt; /etc/hosts`
 
 # RabbitMQ insists on writing to /var
 sudo rabbitmq-server -detached

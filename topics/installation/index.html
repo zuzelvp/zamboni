@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '0.8',
-        COLLAPSE_MODINDEX: false,
-        FILE_SUFFIX: '.html',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="zamboni v0.8 documentation" href="../../" />
     <link rel="next" title="Logging" href="../logging/" />
@@ -31,8 +34,8 @@
           <a href="../../genindex/" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="../logging/" title="Logging"
              accesskey="N">next</a> |</li>
@@ -258,7 +261,7 @@ compliments.</p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="../testing/#testing"><em>Testing</em></a> page has more info, but here&#8217;s the quick way to run
+<p>The <a class="reference internal" href="../testing/#testing"><em>Testing</em></a> page has more info, but here&#8217;s the quick way to run
 zamboni&#8217;s tests:</p>
 <div class="highlight-python"><pre>./manage.py test</pre>
 </div>
@@ -274,20 +277,20 @@ zamboni&#8217;s tests:</p>
 <p>We use <a class="reference external" href="http://github.com/jbalogh/schematic/">schematic</a> to run migrations:</p>
 <div class="highlight-python"><pre>./vendor/src/schematic/schematic migrations</pre>
 </div>
-<p>The <a class="reference external" href="../contributing/"><em>Contributing</em></a> page has more on managing branches.</p>
+<p>The <a class="reference internal" href="../contributing/"><em>Contributing</em></a> page has more on managing branches.</p>
 <p>If you want to pull in the latest locales:</p>
 <div class="highlight-python"><pre>pushd locale &amp;&amp; svn up &amp;&amp; popd</pre>
 </div>
 </div>
 <div class="section" id="submitting-a-patch">
 <h2>Submitting a Patch<a class="headerlink" href="#submitting-a-patch" title="Permalink to this headline">¶</a></h2>
-<p>See the <a class="reference external" href="../contributing/"><em>Contributing</em></a> page.</p>
+<p>See the <a class="reference internal" href="../contributing/"><em>Contributing</em></a> page.</p>
 </div>
 <div class="section" id="advanced-installation">
 <span id="advanced-install"></span><h2>Advanced Installation<a class="headerlink" href="#advanced-installation" title="Permalink to this headline">¶</a></h2>
 <p>In production we use things like memcached, rabbitmq + celery, sphinx, redis,
 and mongodb.  Learn more about installing these on the
-<a class="reference external" href="../advanced-installation/"><em>Getting Fancy</em></a> page.</p>
+<a class="reference internal" href="../advanced-installation/"><em>Getting Fancy</em></a> page.</p>
 </div>
 </div>
 
@@ -297,62 +300,62 @@ and mongodb.  Learn more about installing these on the
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../../">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="">Installing Zamboni</a><ul>
-<li><a class="reference external" href="#requirements">Requirements</a><ul>
-<li><a class="reference external" href="#on-ubuntu">On Ubuntu</a></li>
-<li><a class="reference external" href="#on-os-x">On OS X</a></li>
+  <h3><a href="../../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing Zamboni</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#on-ubuntu">On Ubuntu</a></li>
+<li><a class="reference internal" href="#on-os-x">On OS X</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#use-the-source">Use the Source</a></li>
-<li><a class="reference external" href="#virtualenv">virtualenv</a><ul>
-<li><a class="reference external" href="#virtualenvwrapper">virtualenvwrapper</a><ul>
-<li><a class="reference external" href="#virtualenvwrapper-hooks-optional">virtualenvwrapper Hooks (optional)</a></li>
+<li><a class="reference internal" href="#use-the-source">Use the Source</a></li>
+<li><a class="reference internal" href="#virtualenv">virtualenv</a><ul>
+<li><a class="reference internal" href="#virtualenvwrapper">virtualenvwrapper</a><ul>
+<li><a class="reference internal" href="#virtualenvwrapper-hooks-optional">virtualenvwrapper Hooks (optional)</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference external" href="#getting-packages">Getting Packages</a><ul>
-<li><a class="reference external" href="#finish-the-install">Finish the install</a></li>
+<li><a class="reference internal" href="#getting-packages">Getting Packages</a><ul>
+<li><a class="reference internal" href="#finish-the-install">Finish the install</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#settings">Settings</a></li>
-<li><a class="reference external" href="#database">Database</a></li>
-<li><a class="reference external" href="#run-the-server">Run the Server</a></li>
-<li><a class="reference external" href="#contact">Contact</a></li>
-<li><a class="reference external" href="#testing">Testing</a></li>
-<li><a class="reference external" href="#updating">Updating</a></li>
-<li><a class="reference external" href="#submitting-a-patch">Submitting a Patch</a></li>
-<li><a class="reference external" href="#advanced-installation">Advanced Installation</a></li>
+<li><a class="reference internal" href="#settings">Settings</a></li>
+<li><a class="reference internal" href="#database">Database</a></li>
+<li><a class="reference internal" href="#run-the-server">Run the Server</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#updating">Updating</a></li>
+<li><a class="reference internal" href="#submitting-a-patch">Submitting a Patch</a></li>
+<li><a class="reference internal" href="#advanced-installation">Advanced Installation</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="../django/"
-                                  title="previous chapter">Django, the Good Parts</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="../logging/"
-                                  title="next chapter">Logging</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../../_sources/topics/installation.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../../search/" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../django/"
+                        title="previous chapter">Django, the Good Parts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../logging/"
+                        title="next chapter">Logging</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/topics/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search/" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -364,7 +367,7 @@ and mongodb.  Learn more about installing these on the
           <a href="../../genindex/" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../modindex/" title="Global Module Index"
+          <a href="../../py-modindex/" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="../logging/" title="Logging"
@@ -376,13 +379,8 @@ and mongodb.  Learn more about installing these on the
       </ul>
     </div>
     <div class="footer">
-<<<<<<< HEAD
         &copy; Copyright 2009, The Zamboni Collective.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
-=======
-      &copy; Copyright 2009, The Zamboni Collective.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
->>>>>>> 7c46185a979946d6726a32a2eb37c3393876631b
     </div>
   </body>
 </html>

@@ -49,10 +49,10 @@
             
   <div class="section" id="translating-fields-on-models">
 <span id="translations"></span><h1>Translating Fields on Models<a class="headerlink" href="#translating-fields-on-models" title="Permalink to this headline">¶</a></h1>
-<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <tt class="xref py py-class docutils literal"><span class="pre">Translation</span></tt>
+<p>The <tt class="docutils literal"><span class="pre">translations</span></tt> app defines a <a class="reference internal" href="#translations.models.Translation" title="translations.models.Translation"><tt class="xref py py-class docutils literal"><span class="pre">Translation</span></tt></a>
 model, but for the most part, you shouldn&#8217;t have to use that directly.  When you
 want to create a foreign key to the <tt class="docutils literal"><span class="pre">translations</span></tt> table, use
-<tt class="xref py py-class docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt>.  This subclasses Django&#8217;s
+<a class="reference internal" href="#translations.fields.TranslatedField" title="translations.fields.TranslatedField"><tt class="xref py py-class docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt></a>.  This subclasses Django&#8217;s
 <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ForeignKey" title="(in Django v1.1)"><tt class="xref py py-class docutils literal"><span class="pre">django.db.models.ForeignKey</span></tt></a> to make it work with our special handling
 of translation rows.</p>
 <p>A minimal Addon model looks like this:</p>
@@ -67,15 +67,47 @@ of translation rows.</p>
 <div class="section" id="creating-new-translations">
 <h2>Creating New Translations<a class="headerlink" href="#creating-new-translations" title="Permalink to this headline">¶</a></h2>
 <p>If you need to create new
-<tt class="xref py py-class docutils literal"><span class="pre">Translations</span></tt> without the automagic
-helpers behind <tt class="xref py py-class docutils literal"><span class="pre">TranslatedField</span></tt>, use
-<tt class="xref py py-meth docutils literal"><span class="pre">Translation.new</span></tt>.</p>
+<a class="reference internal" href="#translations.models.Translation" title="translations.models.Translation"><tt class="xref py py-class docutils literal"><span class="pre">Translations</span></tt></a> without the automagic
+helpers behind <a class="reference internal" href="#translations.fields.TranslatedField" title="translations.fields.TranslatedField"><tt class="xref py py-class docutils literal"><span class="pre">TranslatedField</span></tt></a>, use
+<a class="reference internal" href="#translations.models.Translation.new" title="translations.models.Translation.new"><tt class="xref py py-meth docutils literal"><span class="pre">Translation.new</span></tt></a>.</p>
+<dl class="classmethod">
+<dt id="translations.models.Translation.new">
+<em class="property">classmethod </em><tt class="descclassname">Translation.</tt><tt class="descname">new</tt><big>(</big><em>string</em>, <em>locale</em>, <em>id=None</em><big>)</big><a class="headerlink" href="#translations.models.Translation.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jumps through all the right hoops to create a new translation.</p>
+<p>If <tt class="docutils literal"><span class="pre">id</span></tt> is not given a new id will be created using
+<tt class="docutils literal"><span class="pre">translations_seq</span></tt>.  Otherwise, the id will be used to add strings to
+an existing translation.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-translations.fields">
 <span id="translations-fields"></span><h2><tt class="docutils literal"><span class="pre">translations.fields</span></tt><a class="headerlink" href="#module-translations.fields" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="translations.fields.TranslatedField">
+<em class="property">class </em><tt class="descclassname">translations.fields.</tt><tt class="descname">TranslatedField</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.fields.TranslatedField" title="Permalink to this definition">¶</a></dt>
+<dd><p>A foreign key to the translations table.</p>
+<p>If require_locale=False, the fallback join will not use a locale.  Instead,
+we will look for 1) a translation in the current locale and 2) fallback
+with any translation matching the foreign key.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-translations.models">
 <span id="translations-models"></span><h2><tt class="docutils literal"><span class="pre">translations.models</span></tt><a class="headerlink" href="#module-translations.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="translations.models.Translation">
+<em class="property">class </em><tt class="descclassname">translations.models.</tt><tt class="descname">Translation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.models.Translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translation model.</p>
+<p>Use <a class="reference internal" href="#translations.fields.TranslatedField" title="translations.fields.TranslatedField"><tt class="xref py py-class docutils literal"><span class="pre">translations.fields.TranslatedField</span></tt></a> instead of a plain foreign
+key to this model.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="translations.models.TranslationSequence">
+<em class="property">class </em><tt class="descclassname">translations.models.</tt><tt class="descname">TranslationSequence</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#translations.models.TranslationSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>The translations_seq table, so syncdb will create it during testing.</p>
+</dd></dl>
+
 </div>
 </div>
 
